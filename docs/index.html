@@ -175,12 +175,12 @@
   <header>
     <h1>Lovecraft RAG Engine — Step-by-step plan (4 hours/week)</h1>
     <p>
-      A structured weekly checklist to learn <b>FastAPI → Retrieval → RAG → pgvector → Evals → Traces → (optional) Local LLM</b>.
+      A structured weekly checklist to learn <b>FastAPI → Chunking → First LLM call → Retrieval → RAG → pgvector → Evals → Traces → Demo UI</b>.
       Designed for <b>~2 sessions × 2 hours</b> per week.
     </p>
     <div class="meta">
       <span class="pill">Pace: 4h/week</span>
-      <span class="pill">Duration: 18 weeks</span>
+      <span class="pill">Duration: 17 weeks</span>
       <span class="pill">Output: Portfolio-ready repo + reusable RAG template</span>
     </div>
 
@@ -346,19 +346,50 @@ GET  /health</pre>
       <!-- WEEK 5 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 5</span> <span class="goal">Keyword retrieval (first search)</span></span>
+          <span><span class="wk">Week 5</span> <span class="goal">First LLM call (minimal, hardcoded context)</span></span>
           <span class="donebadge" data-badge="w5">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">You can search chunks with a simple keyword score.</p>
+            <p class="small">You see a real model response this week, without waiting for full retrieval infra.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w5">
-              <label><input type="checkbox" data-id="w5-1">Implement a naive keyword scoring function</label>
-              <label><input type="checkbox" data-id="w5-2">Add <code>POST /search</code> (query, optional story_id)</label>
-              <label><input type="checkbox" data-id="w5-3">Return top 5 chunks + their IDs</label>
-              <label><input type="checkbox" data-id="w5-4">Add 5 example queries to README</label>
+              <label><input type="checkbox" data-id="w5-1">Add LLM API key loading via <code>.env</code></label>
+              <label><input type="checkbox" data-id="w5-2">Add <code>POST /ask-minimal</code> with one hardcoded chunk as context</label>
+              <label><input type="checkbox" data-id="w5-3">Prompt: “answer only from context; say don't know if missing”</label>
+              <label><input type="checkbox" data-id="w5-4">Return <code>{answer, citations:["story:chunk"]}</code></label>
+            </div>
+          </div>
+          <div>
+            <h3>Why this week matters</h3>
+            <p class="small">Fast feedback keeps momentum high while you keep the system simple.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://platform.openai.com/docs/quickstart" target="_blank">OpenAI Python SDK quickstart</a></li>
+              <li><a href="https://pypi.org/project/python-dotenv/" target="_blank">python-dotenv</a> — load API keys from a local <code>.env</code></li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <!-- WEEK 6 -->
+      <details class="card">
+        <summary>
+          <span><span class="wk">Week 6</span> <span class="goal">Retrieval + citations skeleton (no dynamic prompt yet)</span></span>
+          <span class="donebadge" data-badge="w6">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Outcome</h3>
+            <p class="small">You can retrieve chunk candidates and return stable citations from live data.</p>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="w6">
+              <label><input type="checkbox" data-id="w6-1">Implement naive keyword scoring (or BM25)</label>
+              <label><input type="checkbox" data-id="w6-2">Add <code>POST /search</code> (query, optional story_id)</label>
+              <label><input type="checkbox" data-id="w6-3">Add <code>POST /ask</code> returning retrieved chunks + chunk IDs</label>
+              <label><input type="checkbox" data-id="w6-4">Add 5 test queries in README with expected chunk IDs</label>
             </div>
           </div>
           <div>
@@ -371,36 +402,7 @@ GET  /health</pre>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://pypi.org/project/rank-bm25/" target="_blank">rank-bm25</a> — simple library for proper keyword scoring (better than counting words manually)</li>
-            </ul>
-          </div>
-        </div>
-      </details>
-
-      <!-- WEEK 6 -->
-      <details class="card">
-        <summary>
-          <span><span class="wk">Week 6</span> <span class="goal">RAG shape without LLM (retrieve + cite)</span></span>
-          <span class="donebadge" data-badge="w6">0%</span>
-        </summary>
-        <div class="content two">
-          <div>
-            <h3>Outcome</h3>
-            <p class="small">You have an <code>/ask</code> endpoint that retrieves context and returns it with citations (still no LLM).</p>
-            <h3>Checklist</h3>
-            <div class="checklist" data-week="w6">
-              <label><input type="checkbox" data-id="w6-1">Add <code>POST /ask</code> (returns retrieved context + citations)</label>
-              <label><input type="checkbox" data-id="w6-2">Return: question, retrieved chunk IDs, chunk texts</label>
-              <label><input type="checkbox" data-id="w6-3">Add request_id logging middleware</label>
-            </div>
-          </div>
-          <div>
-            <h3>Why this week matters</h3>
-            <p class="small">This is the "skeleton" of RAG. Adding an LLM later is just one extra step.</p>
-
-            <h3>Docs</h3>
-            <ul class="small">
-              <li><a href="https://fastapi.tiangolo.com/tutorial/middleware/" target="_blank">FastAPI middleware</a> — for adding request_id logging</li>
+              <li><a href="https://pypi.org/project/rank-bm25/" target="_blank">rank-bm25</a> — simple keyword retrieval baseline</li>
             </ul>
           </div>
         </div>
@@ -409,33 +411,32 @@ GET  /health</pre>
       <!-- WEEK 7 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 7</span> <span class="goal">Add LLM call (cloud) + cite</span></span>
+          <span><span class="wk">Week 7</span> <span class="goal">Wire retrieval into LLM /ask (grounded answers)</span></span>
           <span class="donebadge" data-badge="w7">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Your <code>/ask</code> produces an answer grounded in retrieved chunks + citations.</p>
+            <p class="small">Your <code>/ask</code> now uses retrieved chunks as context and returns grounded answers + citations.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w7">
-              <label><input type="checkbox" data-id="w7-1">Add config for LLM provider (start with OpenAI API)</label>
-              <label><input type="checkbox" data-id="w7-2">Prompt: “use only provided context; cite chunk IDs”</label>
-              <label><input type="checkbox" data-id="w7-3">Return JSON: <code>{answer, citations:[chunk_id...]}</code></label>
-              <label><input type="checkbox" data-id="w7-4">Add a “don’t know if insufficient context” behavior</label>
+              <label><input type="checkbox" data-id="w7-1">Replace hardcoded context with top-k retrieved chunks</label>
+              <label><input type="checkbox" data-id="w7-2">Return JSON: <code>{answer, citations:[chunk_id...]}</code></label>
+              <label><input type="checkbox" data-id="w7-3">Add “don't know” behavior for weak context</label>
+              <label><input type="checkbox" data-id="w7-4">Add request_id middleware and latency logging (no raw docs)</label>
             </div>
           </div>
           <div>
             <h3>Keep it safe</h3>
             <ul class="small">
               <li>Never log raw story text or full prompts.</li>
-              <li>Log only IDs + timings + token counts if available.</li>
+              <li>Log IDs, timings, and token counts only.</li>
             </ul>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://platform.openai.com/docs/quickstart" target="_blank">OpenAI Python SDK quickstart</a></li>
+              <li><a href="https://fastapi.tiangolo.com/tutorial/middleware/" target="_blank">FastAPI middleware</a></li>
               <li><a href="https://docs.anthropic.com/en/api/getting-started" target="_blank">Anthropic (Claude) API getting started</a></li>
-              <li><a href="https://pypi.org/project/python-dotenv/" target="_blank">python-dotenv</a> — safely load your API key from a <code>.env</code> file</li>
             </ul>
           </div>
         </div>
@@ -444,29 +445,30 @@ GET  /health</pre>
       <!-- WEEK 8 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 8</span> <span class="goal">Introduce Docker Compose (DB later) + repo hygiene</span></span>
+          <span><span class="wk">Week 8</span> <span class="goal">Docker Compose + Postgres + repo hygiene</span></span>
           <span class="donebadge" data-badge="w8">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Project is “professional-looking”: scripts, env, Makefile, basic tests scaffold.</p>
+            <p class="small">Your app has persistent storage plus clean project scaffolding.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w8">
-              <label><input type="checkbox" data-id="w8-1">Add <code>Makefile</code> (dev/test/eval placeholders)</label>
-              <label><input type="checkbox" data-id="w8-2">Add minimal unit test scaffold (even 1 test)</label>
-              <label><input type="checkbox" data-id="w8-3">Add <code>docs/architecture.md</code> (ASCII diagram)</label>
-              <label><input type="checkbox" data-id="w8-4">Add <code>docs/security.md</code> (no secrets, no raw logs)</label>
+              <label><input type="checkbox" data-id="w8-1">Add <code>Makefile</code> (dev/test/eval)</label>
+              <label><input type="checkbox" data-id="w8-2">Add at least 1 unit/integration test</label>
+              <label><input type="checkbox" data-id="w8-3">Add <code>docker-compose.yml</code> with Postgres</label>
+              <label><input type="checkbox" data-id="w8-4">Create <code>stories</code> + <code>chunks</code> tables</label>
+              <label><input type="checkbox" data-id="w8-5">Move ingest/read paths from memory to DB</label>
             </div>
           </div>
           <div>
-            <h3>Why before Postgres?</h3>
-            <p class="small">So when you add the DB, your repo doesn't turn into spaghetti.</p>
+            <h3>Tip</h3>
+            <p class="small">Do infra + persistence together so each setup step has an immediate purpose.</p>
 
             <h3>Docs</h3>
             <ul class="small">
               <li><a href="https://docs.pytest.org/en/stable/getting-started.html" target="_blank">pytest getting started</a></li>
-              <li><a href="https://fastapi.tiangolo.com/tutorial/testing/" target="_blank">FastAPI testing guide</a></li>
+              <li><a href="https://docs.sqlalchemy.org/en/20/tutorial/" target="_blank">SQLAlchemy tutorial</a></li>
               <li><a href="https://docs.docker.com/compose/gettingstarted/" target="_blank">Docker Compose getting started</a></li>
             </ul>
           </div>
@@ -476,29 +478,28 @@ GET  /health</pre>
       <!-- WEEK 9 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 9</span> <span class="goal">Postgres (Docker) + move stories/chunks into DB</span></span>
+          <span><span class="wk">Week 9</span> <span class="goal">Add pgvector extension</span></span>
           <span class="donebadge" data-badge="w9">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Your data persists. You’re no longer “in-memory”.</p>
+            <p class="small">DB supports vector columns and similarity search primitives.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w9">
-              <label><input type="checkbox" data-id="w9-1">Add <code>docker-compose.yml</code> for Postgres</label>
-              <label><input type="checkbox" data-id="w9-2">Define tables: <code>stories</code>, <code>chunks</code></label>
-              <label><input type="checkbox" data-id="w9-3">Update ingest to write stories/chunks into DB</label>
-              <label><input type="checkbox" data-id="w9-4">Update endpoints to read from DB</label>
+              <label><input type="checkbox" data-id="w9-1">Enable pgvector in Postgres</label>
+              <label><input type="checkbox" data-id="w9-2">Add <code>embedding</code> column/table for chunks</label>
+              <label><input type="checkbox" data-id="w9-3">Write one similarity query (even with dummy vectors)</label>
             </div>
           </div>
           <div>
-            <h3>Tip</h3>
-            <p class="small">Keep schemas minimal. Don't add users/auth scopes yet unless you need them.</p>
+            <h3>Why now?</h3>
+            <p class="small">Storage comes first; embedding generation is next week.</p>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://docs.sqlalchemy.org/en/20/tutorial/" target="_blank">SQLAlchemy tutorial</a> — the standard Python ORM for Postgres</li>
-              <li><a href="https://docs.docker.com/compose/" target="_blank">Docker Compose docs</a></li>
+              <li><a href="https://github.com/pgvector/pgvector" target="_blank">pgvector GitHub</a> — setup and SQL patterns</li>
+              <li>Use image <code>pgvector/pgvector:pg16</code> to simplify setup</li>
             </ul>
           </div>
         </div>
@@ -507,28 +508,29 @@ GET  /health</pre>
       <!-- WEEK 10 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 10</span> <span class="goal">Add pgvector extension</span></span>
+          <span><span class="wk">Week 10</span> <span class="goal">Embeddings ingestion script</span></span>
           <span class="donebadge" data-badge="w10">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">DB supports vector columns / similarity search.</p>
+            <p class="small">Chunks receive embeddings and are queryable through pgvector.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w10">
-              <label><input type="checkbox" data-id="w10-1">Enable pgvector in Postgres</label>
-              <label><input type="checkbox" data-id="w10-2">Add <code>embedding</code> column/table for chunks</label>
-              <label><input type="checkbox" data-id="w10-3">Write a simple similarity query (even if embeddings empty)</label>
+              <label><input type="checkbox" data-id="w10-1">Create <code>scripts/ingest_embeddings.py</code></label>
+              <label><input type="checkbox" data-id="w10-2">Embed all chunks for 1 story</label>
+              <label><input type="checkbox" data-id="w10-3">Store vectors + mark chunk as embedded</label>
+              <label><input type="checkbox" data-id="w10-4">Skip already embedded chunks on re-run</label>
             </div>
           </div>
           <div>
-            <h3>Why now?</h3>
-            <p class="small">You're preparing the storage before you generate embeddings.</p>
+            <h3>Cost control</h3>
+            <p class="small">Embedding is a batch step, not a per-request step.</p>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://github.com/pgvector/pgvector" target="_blank">pgvector GitHub</a> — setup, SQL examples, index types explained</li>
-              <li>Use the Docker image <code>pgvector/pgvector:pg16</code> — pgvector comes pre-installed</li>
+              <li><a href="https://platform.openai.com/docs/guides/embeddings" target="_blank">OpenAI embeddings guide</a></li>
+              <li><a href="https://www.sbert.net/" target="_blank">sentence-transformers</a> — local alternative</li>
             </ul>
           </div>
         </div>
@@ -537,29 +539,31 @@ GET  /health</pre>
       <!-- WEEK 11 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 11</span> <span class="goal">Embeddings ingestion script</span></span>
+          <span><span class="wk">Week 11</span> <span class="goal">Switch retrieval to vectors + create eval dataset</span></span>
           <span class="donebadge" data-badge="w11">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Chunks get embeddings stored in pgvector.</p>
+            <p class="small">Retrieval works semantically and you define the eval questions you'll use going forward.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w11">
-              <label><input type="checkbox" data-id="w11-1">Create <code>scripts/ingest_embeddings.py</code></label>
-              <label><input type="checkbox" data-id="w11-2">Embed all chunks for 1 story</label>
-              <label><input type="checkbox" data-id="w11-3">Store vectors and mark chunk as “embedded”</label>
-              <label><input type="checkbox" data-id="w11-4">Add a re-run strategy (skip already embedded)</label>
+              <label><input type="checkbox" data-id="w11-1">Add <code>retrieval_mode=keyword|vector</code></label>
+              <label><input type="checkbox" data-id="w11-2">Implement vector top-k retrieval in <code>/search</code> and <code>/ask</code></label>
+              <label><input type="checkbox" data-id="w11-3">Keep citations unchanged (chunk IDs)</label>
+              <label><input type="checkbox" data-id="w11-4">Create <code>data/eval/eval_questions.json</code> (20 questions + expected story IDs)</label>
+              <label><input type="checkbox" data-id="w11-5">Add short rubric in <code>docs/evals.md</code></label>
             </div>
           </div>
           <div>
-            <h3>Cost control</h3>
-            <p class="small">Embed once, reuse forever. Don't re-embed on every run.</p>
+            <h3>Sanity check query</h3>
+            <pre>"cosmic entity beneath the sea"</pre>
+            <p class="small">Should retrieve Cthulhu-related chunks even if the name isn't explicit.</p>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://platform.openai.com/docs/guides/embeddings" target="_blank">OpenAI embeddings guide</a> — <code>text-embedding-3-small</code> is cheap and works great</li>
-              <li><a href="https://www.sbert.net/" target="_blank">sentence-transformers</a> — free alternative that runs locally, no API key needed</li>
+              <li><a href="https://github.com/pgvector/pgvector?tab=readme-ov-file#querying" target="_blank">pgvector similarity queries</a></li>
+              <li><a href="https://docs.ragas.io/" target="_blank">RAGAS</a> — RAG evaluation toolkit</li>
             </ul>
           </div>
         </div>
@@ -568,29 +572,27 @@ GET  /health</pre>
       <!-- WEEK 12 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 12</span> <span class="goal">Switch retrieval to vectors (semantic search)</span></span>
+          <span><span class="wk">Week 12</span> <span class="goal">Eval script (retrieval metrics first)</span></span>
           <span class="donebadge" data-badge="w12">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Your <code>/search</code> and <code>/ask</code> can retrieve by meaning, not just keywords.</p>
+            <p class="small">You can measure retrieval quality independently (hit@k, recall-style checks).</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w12">
-              <label><input type="checkbox" data-id="w12-1">Add <code>retrieval_mode=keyword|vector</code></label>
-              <label><input type="checkbox" data-id="w12-2">Implement vector top-k retrieval</label>
-              <label><input type="checkbox" data-id="w12-3">Keep citations unchanged (chunk IDs)</label>
-              <label><input type="checkbox" data-id="w12-4">Add 5 semantic queries to README</label>
+              <label><input type="checkbox" data-id="w12-1">Write <code>scripts/eval.py</code> for retrieval over eval questions</label>
+              <label><input type="checkbox" data-id="w12-2">Compute hit@k for expected story/chunk presence</label>
+              <label><input type="checkbox" data-id="w12-3">Output JSON report in <code>data/eval/</code></label>
             </div>
           </div>
           <div>
-            <h3>Sanity check query</h3>
-            <pre>"cosmic entity beneath the sea"</pre>
-            <p class="small">Should retrieve Cthulhu-ish chunks even if "Cthulhu" isn't in the query.</p>
+            <h3>Why retrieval-first?</h3>
+            <p class="small">Most answer-quality failures originate from poor context retrieval.</p>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://github.com/pgvector/pgvector?tab=readme-ov-file#querying" target="_blank">pgvector similarity queries</a> — how to query by nearest vector in SQL</li>
+              <li><a href="https://docs.ragas.io/en/stable/concepts/metrics/" target="_blank">RAGAS metrics overview</a></li>
             </ul>
           </div>
         </div>
@@ -599,33 +601,28 @@ GET  /health</pre>
       <!-- WEEK 13 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 13</span> <span class="goal">Eval dataset (golden questions)</span></span>
+          <span><span class="wk">Week 13</span> <span class="goal">Eval full RAG (answer + citations)</span></span>
           <span class="donebadge" data-badge="w13">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">You have a small eval set you’ll use forever.</p>
+            <p class="small">Your eval harness now checks answer behavior, citations, and latency.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w13">
-              <label><input type="checkbox" data-id="w13-1">Create <code>data/eval/eval_questions.json</code> (20 questions)</label>
-              <label><input type="checkbox" data-id="w13-2">For each question, store expected story_id (or expected keyword)</label>
-              <label><input type="checkbox" data-id="w13-3">Add a short rubric in <code>docs/evals.md</code></label>
+              <label><input type="checkbox" data-id="w13-1">Extend eval to call <code>/ask</code></label>
+              <label><input type="checkbox" data-id="w13-2">Validate citations are non-empty + well-formed chunk IDs</label>
+              <label><input type="checkbox" data-id="w13-3">Record latency per question</label>
+              <label><input type="checkbox" data-id="w13-4">Save a baseline report for future comparisons</label>
             </div>
           </div>
           <div>
-            <h3>Example entry</h3>
-            <pre>[
-  {
-    "id": "q01",
-    "question": "Which story mentions Innsmouth?",
-    "expected_story_ids": ["shadow_over_innsmouth"]
-  }
-]</pre>
+            <h3>Harness mindset</h3>
+            <p class="small">Every retrieval/prompt change should run this suite and compare against baseline.</p>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://docs.ragas.io/" target="_blank">RAGAS</a> — evaluation framework built specifically for RAG pipelines</li>
+              <li><a href="https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/" target="_blank">RAGAS faithfulness metric</a></li>
             </ul>
           </div>
         </div>
@@ -634,27 +631,28 @@ GET  /health</pre>
       <!-- WEEK 14 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 14</span> <span class="goal">Eval script (retrieval metrics first)</span></span>
+          <span><span class="wk">Week 14</span> <span class="goal">Observability: traces + request IDs</span></span>
           <span class="donebadge" data-badge="w14">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">You can measure retrieval independently (hit@k).</p>
+            <p class="small">You can inspect why an answer happened by checking trace data.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w14">
-              <label><input type="checkbox" data-id="w14-1">Write <code>scripts/eval.py</code> that runs retrieval for each question</label>
-              <label><input type="checkbox" data-id="w14-2">Compute hit@k: expected story appears in retrieved chunks</label>
-              <label><input type="checkbox" data-id="w14-3">Output a JSON report file</label>
+              <label><input type="checkbox" data-id="w14-1">Create <code>ask_traces</code> table (question, retrieved_chunk_ids, timings)</label>
+              <label><input type="checkbox" data-id="w14-2">Persist one trace per <code>/ask</code></label>
+              <label><input type="checkbox" data-id="w14-3">Add <code>GET /traces/{id}</code></label>
+              <label><input type="checkbox" data-id="w14-4">Log request_id + endpoint + latency (no raw docs)</label>
             </div>
           </div>
           <div>
-            <h3>Why retrieval-first?</h3>
-            <p class="small">Most "hallucination" problems start with bad retrieval. Measure that first.</p>
+            <h3>What you gain</h3>
+            <p class="small">A production-style debugging loop, not just “it feels better now”.</p>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://docs.ragas.io/en/stable/concepts/metrics/" target="_blank">RAGAS metrics overview</a> — context recall, context precision explained simply</li>
+              <li><a href="https://langfuse.com/docs" target="_blank">Langfuse</a> — optional visual tracing for LLM flows</li>
             </ul>
           </div>
         </div>
@@ -663,29 +661,24 @@ GET  /health</pre>
       <!-- WEEK 15 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 15</span> <span class="goal">Eval full RAG (answer + citations)</span></span>
+          <span><span class="wk">Week 15</span> <span class="goal">Improve quality loop (prompt + retrieval tuning)</span></span>
           <span class="donebadge" data-badge="w15">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Your eval measures “has citations” + latency and basic quality checks.</p>
+            <p class="small">You run targeted experiments and keep only changes that improve eval results.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w15">
-              <label><input type="checkbox" data-id="w15-1">Extend eval to call <code>/ask</code></label>
-              <label><input type="checkbox" data-id="w15-2">Check citations are non-empty and valid chunk IDs</label>
-              <label><input type="checkbox" data-id="w15-3">Record latency per question</label>
-              <label><input type="checkbox" data-id="w15-4">Write “baseline” report and keep it in <code>data/eval/</code></label>
+              <label><input type="checkbox" data-id="w15-1">Pick one weak metric from baseline (for example hit@k or citation validity)</label>
+              <label><input type="checkbox" data-id="w15-2">Try two controlled changes (prompt wording, top-k, chunk size, overlap)</label>
+              <label><input type="checkbox" data-id="w15-3">Re-run eval after each change and compare reports</label>
+              <label><input type="checkbox" data-id="w15-4">Record accepted/rejected changes in <code>docs/decisions/</code></label>
             </div>
           </div>
           <div>
-            <h3>Harness mindset</h3>
-            <p class="small">Any prompt/retrieval change should run eval and compare to baseline.</p>
-
-            <h3>Docs</h3>
-            <ul class="small">
-              <li><a href="https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/" target="_blank">RAGAS faithfulness metric</a> — does the answer stick to the retrieved context?</li>
-            </ul>
+            <h3>Rule</h3>
+            <p class="small">No “vibe-based” changes. Keep only improvements that show up in the harness.</p>
           </div>
         </div>
       </details>
@@ -693,28 +686,29 @@ GET  /health</pre>
       <!-- WEEK 16 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 16</span> <span class="goal">Observability: traces + request IDs</span></span>
+          <span><span class="wk">Week 16</span> <span class="goal">Add a simple demo chat UI (Gradio or Streamlit)</span></span>
           <span class="donebadge" data-badge="w16">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">You can answer: “why did it produce that answer?” by inspecting traces.</p>
+            <p class="small">You have a demo people can click through without touching curl commands.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w16">
-              <label><input type="checkbox" data-id="w16-1">Create <code>ask_traces</code> table (question, retrieved_chunk_ids, timings)</label>
-              <label><input type="checkbox" data-id="w16-2">Store a trace for every <code>/ask</code></label>
-              <label><input type="checkbox" data-id="w16-3">Add <code>GET /traces/{id}</code></label>
-              <label><input type="checkbox" data-id="w16-4">Log: request_id + endpoint + latency (no raw docs)</label>
+              <label><input type="checkbox" data-id="w16-1">Create minimal chat UI connected to <code>/ask</code></label>
+              <label><input type="checkbox" data-id="w16-2">Display answer + citation chunk IDs in the UI</label>
+              <label><input type="checkbox" data-id="w16-3">Add one-click “example questions” panel</label>
+              <label><input type="checkbox" data-id="w16-4">Document local demo run command in README</label>
             </div>
           </div>
           <div>
-            <h3>What you gain</h3>
-            <p class="small">This is the basis for real production monitoring and "agentic harness" debugging.</p>
+            <h3>Portfolio boost</h3>
+            <p class="small">A simple UI turns a backend project into a shareable demo artifact.</p>
 
             <h3>Docs</h3>
             <ul class="small">
-              <li><a href="https://langfuse.com/docs" target="_blank">Langfuse</a> — open-source tool that gives you a visual trace viewer for LLM calls, free cloud tier available</li>
+              <li><a href="https://www.gradio.app/guides/quickstart" target="_blank">Gradio quickstart</a></li>
+              <li><a href="https://docs.streamlit.io/get-started/installation" target="_blank">Streamlit getting started</a></li>
             </ul>
           </div>
         </div>
@@ -723,81 +717,37 @@ GET  /health</pre>
       <!-- WEEK 17 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 17</span> <span class="goal">Switch LLM provider + compare eval</span></span>
+          <span><span class="wk">Week 17</span> <span class="goal">Polish for portfolio: README, demo flow, template framing</span></span>
           <span class="donebadge" data-badge="w17">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Same API works with different cloud providers; eval shows quality differences.</p>
+            <p class="small">Repo reads like a professional template: clear setup, clear outcomes, clear adaptation path.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w17">
-              <label><input type="checkbox" data-id="w17-1">Add provider config: <code>LLM_PROVIDER=openai|anthropic</code></label>
-              <label><input type="checkbox" data-id="w17-2">Implement the second provider (whichever you haven't used yet)</label>
-              <label><input type="checkbox" data-id="w17-3">Run eval suite against both providers</label>
-              <label><input type="checkbox" data-id="w17-4">Document tradeoffs in <code>docs/decisions/</code></label>
-            </div>
-          </div>
-          <div>
-            <h3>Why this matters</h3>
-            <p class="small">Abstracting the provider makes your project reusable and teaches you to reason about cost vs quality tradeoffs.</p>
-
-            <h3>Docs</h3>
-            <ul class="small">
-              <li><a href="https://platform.openai.com/docs/guides/text-generation" target="_blank">OpenAI chat completions guide</a></li>
-              <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/overview" target="_blank">Anthropic — building with Claude</a></li>
-            </ul>
-          </div>
-        </div>
-      </details>
-
-      <!-- WEEK 18 -->
-      <details class="card">
-        <summary>
-          <span><span class="wk">Week 18</span> <span class="goal">Polish for portfolio: README, demo script, “template” framing</span></span>
-          <span class="donebadge" data-badge="w18">0%</span>
-        </summary>
-        <div class="content two">
-          <div>
-            <h3>Outcome</h3>
-            <p class="small">Repo reads like a professional template: how to run, what it proves, how to adapt to other docs.</p>
-            <h3>Checklist</h3>
-            <div class="checklist" data-week="w18">
-              <label><input type="checkbox" data-id="w18-1">README: architecture diagram + quickstart</label>
-              <label><input type="checkbox" data-id="w18-2">Add <code>scripts/demo_queries.py</code> showing 5 example questions</label>
-              <label><input type="checkbox" data-id="w18-3">Add “How to adapt to other documents” section</label>
-              <label><input type="checkbox" data-id="w18-4">Create 3 GitHub issues for “next improvements” (rerank, better chunking, etc.)</label>
+              <label><input type="checkbox" data-id="w17-1">README: architecture diagram + quickstart + demo GIF/screenshot</label>
+              <label><input type="checkbox" data-id="w17-2">Add <code>scripts/demo_queries.py</code> with 5 showcase prompts</label>
+              <label><input type="checkbox" data-id="w17-3">Add “How to adapt to other document sets” section</label>
+              <label><input type="checkbox" data-id="w17-4">Create 3 roadmap issues (reranking, hybrid search, better chunking)</label>
             </div>
           </div>
           <div>
             <h3>Template phrasing</h3>
             <pre>This project is a reusable RAG + evaluation harness template.
 Dataset: public-domain Lovecraft texts (demo only).
-Swap scripts/fetch_dataset.py to reuse with PDFs, manuals, or internal docs.</pre>
+Swap data ingestion to reuse with PDFs, manuals, or internal docs.</pre>
           </div>
         </div>
       </details>
 
     </div>
 
-    <div class="card" style="margin-top:14px;">
-      <h2 style="margin:0 0 8px; font-size:16px;">Optional: AWS Solutions Architect track (lightweight, parallel)</h2>
-      <p class="small" style="margin:0;">
-        With 4h/week, keep AWS as <b>30 minutes/week</b> reading. Don’t let it block your build.
-        Each week, write 5 bullets: “How would I deploy this and why?”
-      </p>
-      <ul class="small">
-        <li>Compute choices: Lambda vs containers</li>
-        <li>Storage: Postgres + pgvector, object storage for originals later</li>
-        <li>Security: IAM principle of least privilege</li>
-        <li>Ops: logs, alarms, cost guardrails</li>
-      </ul>
-    </div>
   </main>
 
   <script>
     // Persist checkbox state in localStorage
-    const KEY = "lovecraft_rag_weekly_plan_v1";
+    const KEY = "lovecraft_rag_weekly_plan_v2";
 
     function loadState() {
       try { return JSON.parse(localStorage.getItem(KEY) || "{}"); }
