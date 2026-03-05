@@ -167,6 +167,8 @@
       color: var(--text);
       font-size: 12px;
     }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -231,7 +233,14 @@
             <h3>Session split (2h + 2h)</h3>
             <ul class="small">
               <li><b>Session A:</b> repo + venv + /health</li>
-              <li><b>Session B:</b> clean structure, README “Quickstart”, commit</li>
+              <li><b>Session B:</b> clean structure, README "Quickstart", commit</li>
+            </ul>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://fastapi.tiangolo.com/tutorial/" target="_blank">FastAPI official tutorial</a> — start here</li>
+              <li><a href="https://www.uvicorn.org/" target="_blank">Uvicorn docs</a></li>
+              <li><a href="https://docs.astral.sh/uv/" target="_blank">uv</a> — modern, fast alternative to pip + venv</li>
             </ul>
           </div>
         </div>
@@ -261,7 +270,13 @@
 GET  /stories
 GET  /health</pre>
             <h3>Notes</h3>
-            <p class="small">Don’t add Postgres yet. Keep momentum by staying simple.</p>
+            <p class="small">Don't add Postgres yet. Keep momentum by staying simple.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://docs.pydantic.dev/latest/" target="_blank">Pydantic v2 docs</a> — data validation used by FastAPI</li>
+              <li><a href="https://fastapi.tiangolo.com/tutorial/body/" target="_blank">FastAPI request body guide</a></li>
+            </ul>
           </div>
         </div>
       </details>
@@ -286,7 +301,13 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Keep it small</h3>
-            <p class="small">Start with 1 story. Expand later. You’re learning the pipeline, not collecting a library.</p>
+            <p class="small">Start with 1 story. Expand later. You're learning the pipeline, not collecting a library.</p>
+
+            <h3>Where to get the texts</h3>
+            <ul class="small">
+              <li><a href="https://www.gutenberg.org/ebooks/author/524" target="_blank">Project Gutenberg — H.P. Lovecraft</a> — free public domain .txt downloads</li>
+              <li>Good starters: <em>The Call of Cthulhu</em>, <em>The Shadow Over Innsmouth</em>, <em>At the Mountains of Madness</em></li>
+            </ul>
           </div>
         </div>
       </details>
@@ -311,7 +332,13 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Why chunk IDs matter</h3>
-            <p class="small">They become your “citations”. Everything else (vectors, reranking, evals) builds on this.</p>
+            <p class="small">They become your "citations". Everything else (vectors, reranking, evals) builds on this.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://python.langchain.com/docs/how_to/recursive_text_splitter/" target="_blank">LangChain text splitter</a> — good reference for chunking strategies</li>
+              <li>Tip: add a small overlap (~150 chars) between chunks so context isn't lost at the edges</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -341,6 +368,11 @@ GET  /health</pre>
   "query": "Innsmouth",
   "story_id": "optional"
 }</pre>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://pypi.org/project/rank-bm25/" target="_blank">rank-bm25</a> — simple library for proper keyword scoring (better than counting words manually)</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -364,7 +396,12 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Why this week matters</h3>
-            <p class="small">This is the “skeleton” of RAG. Adding an LLM later is just one extra step.</p>
+            <p class="small">This is the "skeleton" of RAG. Adding an LLM later is just one extra step.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://fastapi.tiangolo.com/tutorial/middleware/" target="_blank">FastAPI middleware</a> — for adding request_id logging</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -393,6 +430,13 @@ GET  /health</pre>
               <li>Never log raw story text or full prompts.</li>
               <li>Log only IDs + timings + token counts if available.</li>
             </ul>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://platform.openai.com/docs/quickstart" target="_blank">OpenAI Python SDK quickstart</a></li>
+              <li><a href="https://docs.anthropic.com/en/api/getting-started" target="_blank">Anthropic (Claude) API getting started</a></li>
+              <li><a href="https://pypi.org/project/python-dotenv/" target="_blank">python-dotenv</a> — safely load your API key from a <code>.env</code> file</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -417,7 +461,14 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Why before Postgres?</h3>
-            <p class="small">So when you add the DB, your repo doesn’t turn into spaghetti.</p>
+            <p class="small">So when you add the DB, your repo doesn't turn into spaghetti.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://docs.pytest.org/en/stable/getting-started.html" target="_blank">pytest getting started</a></li>
+              <li><a href="https://fastapi.tiangolo.com/tutorial/testing/" target="_blank">FastAPI testing guide</a></li>
+              <li><a href="https://docs.docker.com/compose/gettingstarted/" target="_blank">Docker Compose getting started</a></li>
+            </ul>
           </div>
         </div>
       </details>
@@ -442,7 +493,13 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Tip</h3>
-            <p class="small">Keep schemas minimal. Don’t add users/auth scopes yet unless you need them.</p>
+            <p class="small">Keep schemas minimal. Don't add users/auth scopes yet unless you need them.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://docs.sqlalchemy.org/en/20/tutorial/" target="_blank">SQLAlchemy tutorial</a> — the standard Python ORM for Postgres</li>
+              <li><a href="https://docs.docker.com/compose/" target="_blank">Docker Compose docs</a></li>
+            </ul>
           </div>
         </div>
       </details>
@@ -466,7 +523,13 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Why now?</h3>
-            <p class="small">You’re preparing the storage before you generate embeddings.</p>
+            <p class="small">You're preparing the storage before you generate embeddings.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://github.com/pgvector/pgvector" target="_blank">pgvector GitHub</a> — setup, SQL examples, index types explained</li>
+              <li>Use the Docker image <code>pgvector/pgvector:pg16</code> — pgvector comes pre-installed</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -491,7 +554,13 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Cost control</h3>
-            <p class="small">Embed once, reuse forever. Don’t re-embed on every run.</p>
+            <p class="small">Embed once, reuse forever. Don't re-embed on every run.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://platform.openai.com/docs/guides/embeddings" target="_blank">OpenAI embeddings guide</a> — <code>text-embedding-3-small</code> is cheap and works great</li>
+              <li><a href="https://www.sbert.net/" target="_blank">sentence-transformers</a> — free alternative that runs locally, no API key needed</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -517,7 +586,12 @@ GET  /health</pre>
           <div>
             <h3>Sanity check query</h3>
             <pre>"cosmic entity beneath the sea"</pre>
-            <p class="small">Should retrieve Cthulhu-ish chunks even if “Cthulhu” isn’t in the query.</p>
+            <p class="small">Should retrieve Cthulhu-ish chunks even if "Cthulhu" isn't in the query.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://github.com/pgvector/pgvector?tab=readme-ov-file#querying" target="_blank">pgvector similarity queries</a> — how to query by nearest vector in SQL</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -548,6 +622,11 @@ GET  /health</pre>
     "expected_story_ids": ["shadow_over_innsmouth"]
   }
 ]</pre>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://docs.ragas.io/" target="_blank">RAGAS</a> — evaluation framework built specifically for RAG pipelines</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -571,7 +650,12 @@ GET  /health</pre>
           </div>
           <div>
             <h3>Why retrieval-first?</h3>
-            <p class="small">Most “hallucination” problems start with bad retrieval. Measure that first.</p>
+            <p class="small">Most "hallucination" problems start with bad retrieval. Measure that first.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://docs.ragas.io/en/stable/concepts/metrics/" target="_blank">RAGAS metrics overview</a> — context recall, context precision explained simply</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -597,6 +681,11 @@ GET  /health</pre>
           <div>
             <h3>Harness mindset</h3>
             <p class="small">Any prompt/retrieval change should run eval and compare to baseline.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/" target="_blank">RAGAS faithfulness metric</a> — does the answer stick to the retrieved context?</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -621,7 +710,12 @@ GET  /health</pre>
           </div>
           <div>
             <h3>What you gain</h3>
-            <p class="small">This is the basis for real production monitoring and “agentic harness” debugging.</p>
+            <p class="small">This is the basis for real production monitoring and "agentic harness" debugging.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://langfuse.com/docs" target="_blank">Langfuse</a> — open-source tool that gives you a visual trace viewer for LLM calls, free cloud tier available</li>
+            </ul>
           </div>
         </div>
       </details>
@@ -629,24 +723,30 @@ GET  /health</pre>
       <!-- WEEK 17 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Week 17</span> <span class="goal">Local LLM switch (Ollama/Qwen) + compare eval</span></span>
+          <span><span class="wk">Week 17</span> <span class="goal">Switch LLM provider + compare eval</span></span>
           <span class="donebadge" data-badge="w17">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Outcome</h3>
-            <p class="small">Same API works with cloud or local provider; eval shows the difference.</p>
+            <p class="small">Same API works with different cloud providers; eval shows quality differences.</p>
             <h3>Checklist</h3>
             <div class="checklist" data-week="w17">
-              <label><input type="checkbox" data-id="w17-1">Add provider config: <code>LLM_PROVIDER=openai|ollama</code></label>
-              <label><input type="checkbox" data-id="w17-2">Implement Ollama base URL + model name</label>
+              <label><input type="checkbox" data-id="w17-1">Add provider config: <code>LLM_PROVIDER=openai|anthropic</code></label>
+              <label><input type="checkbox" data-id="w17-2">Implement the second provider (whichever you haven't used yet)</label>
               <label><input type="checkbox" data-id="w17-3">Run eval suite against both providers</label>
               <label><input type="checkbox" data-id="w17-4">Document tradeoffs in <code>docs/decisions/</code></label>
             </div>
           </div>
           <div>
             <h3>Why this matters</h3>
-            <p class="small">You learn provider abstraction + cost/privacy tradeoffs—very consulting-relevant.</p>
+            <p class="small">Abstracting the provider makes your project reusable and teaches you to reason about cost vs quality tradeoffs.</p>
+
+            <h3>Docs</h3>
+            <ul class="small">
+              <li><a href="https://platform.openai.com/docs/guides/text-generation" target="_blank">OpenAI chat completions guide</a></li>
+              <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/overview" target="_blank">Anthropic — building with Claude</a></li>
+            </ul>
           </div>
         </div>
       </details>
