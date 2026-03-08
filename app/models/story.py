@@ -1,13 +1,17 @@
 from pydantic import BaseModel
-from datetime import datetime 
+from datetime import datetime
 
-class StoryRequest(BaseModel):
+class StoryCreate(BaseModel):
     title: str
-    content: str
-    
-class StoryResponse(BaseModel):
+    author: str | None = None
+    source_url: str | None = None
+    text: str
+
+class Story(BaseModel):
     id: str
     title: str
-    content: str
+    author: str | None
+    source_url: str | None
+    text: str
     created_at: datetime
     
