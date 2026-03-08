@@ -323,8 +323,9 @@
             <h3>What you will learn</h3>
             <ul class="small">
               <li>Docker Compose + Postgres only when you need persistence.</li>
-              <li>Why lexical search helps exact names/titles while semantic search helps fuzzy thematic matches.</li>
-              <li>Why first-pass retrieval is often not enough without reranking.</li>
+              <li>Why keyword/lexical search helps exact names/titles/phrases while semantic search helps fuzzy thematic matches.</li>
+              <li>Why production retrieval often needs lexical + vector together, not either/or.</li>
+              <li>Why first-pass retrieval is often not enough without a reranking step.</li>
             </ul>
             <h3>Checklist</h3>
             <div class="checklist" data-week="mD">
@@ -333,9 +334,9 @@
               <label><input type="checkbox" data-id="md-3">Enable pgvector and add embedding storage</label>
               <label><input type="checkbox" data-id="md-4">Create embeddings ingestion script</label>
               <label><input type="checkbox" data-id="md-5">Implement vector retrieval (keep lexical/BM25 retrieval available)</label>
-              <label><input type="checkbox" data-id="md-6">Add hybrid retrieval by combining lexical and semantic candidates</label>
+              <label><input type="checkbox" data-id="md-6">Implement hybrid retrieval by combining keyword and vector candidate sets</label>
               <label><input type="checkbox" data-id="md-7">Add metadata-aware filtering (for example by title, year, entity, motif) to complement embeddings</label>
-              <label><input type="checkbox" data-id="md-8">Retrieve a candidate set first, then rerank it before final context selection</label>
+              <label><input type="checkbox" data-id="md-8">Retrieve top candidates first, rerank them, then pass only the best chunks to generation</label>
               <label><input type="checkbox" data-id="md-9">Run and document lexical vs vector vs hybrid, before/after reranking comparison</label>
             </div>
           </div>
@@ -357,7 +358,7 @@
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Adopt a systems mindset: measure behavior, compare changes, and debug with evidence.</p>
+            <p class="small">Adopt a systems mindset: measure behavior by question type, compare changes, and debug with evidence.</p>
             <h3>Estimated total</h3>
             <p class="small">8-12 hours.</p>
             <h3>What you will learn</h3>
@@ -374,8 +375,8 @@
               <label><input type="checkbox" data-id="me-4">Save a baseline report for future comparisons</label>
               <label><input type="checkbox" data-id="me-5">Add request IDs and persist ask traces across retrieval and generation steps</label>
               <label><input type="checkbox" data-id="me-6">Track retrieval time and generation time separately</label>
-              <label><input type="checkbox" data-id="me-7">Log chunk counts plus prompt/completion token usage per request</label>
-              <label><input type="checkbox" data-id="me-8">Measure refusal/"don't know" rate and unsupported-claim rate</label>
+              <label><input type="checkbox" data-id="me-7">Log chunk counts retrieved plus prompt/completion token usage per request</label>
+              <label><input type="checkbox" data-id="me-8">Measure refusal/"don't know" rate and unsupported-claim rate over time</label>
               <label><input type="checkbox" data-id="me-9">Add a simple trace inspection endpoint or debug view</label>
             </div>
           </div>
