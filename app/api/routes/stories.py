@@ -9,7 +9,7 @@ router = APIRouter()
 
 STORY_STORE: dict[str, Story] = {}
 
-@router.post("/stories", response_model=Story, status_code= 201)
+@router.post("/stories", response_model=Story, status_code=201)
 def create_story(story: StoryCreate):
     
     if not story.text.strip():

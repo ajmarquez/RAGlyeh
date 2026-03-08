@@ -14,4 +14,3 @@ class Story(BaseModel):
     source_url: str | None
     text: str
     created_at: datetime
-    
