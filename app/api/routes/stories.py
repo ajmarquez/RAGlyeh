@@ -29,36 +29,13 @@ def create_story(story: StoryCreate):
 
 @router.get("/stories/{story_id}")
 def get_story(story_id: str):
-    # For demonstration, we return a dummy story. In a real application, you'd fetch this from a database.
-    story = Story(
-        id=story_id,
-        title="Sample Story",
-        author=None,
-        source_url=None,
-        text="This is a sample story content.",
-        created_at=datetime.now(timezone.utc)
-    )
-    return story
+    if story_id not in STORY_STORE:
+        raise HTTPException(status_code=404, detail="Story not found")
+    return STORY_STORE[story_id]
 
 @router.get("/stories")
 def list_stories():
-    # For demonstration, we return a list of dummy stories. In a real application, you'd fetch this from a database.
-    stories = [
-        Story(
-            id=str(uuid4()),
-            title="Sample Story 1",
-            author=None,
-            source_url=None,
-            text="This is the first sample story content.",
-            created_at=datetime.now(timezone.utc)
-        ),
-        Story(
-            id=str(uuid4()),
-            title="Sample Story 2",
-            author=None,
-            source_url=None,
-            text="This is the second sample story content.",
-            created_at=datetime.now(timezone.utc)
-        )
-    ]
-    return stories  
+    # Return all stories from the in-memory store
+    if not STORY_STORE:
+        return []
+    return list(STORY_STORE.values())  
