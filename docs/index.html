@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lovecraft Grounded AI Lab — Milestone Roadmap</title>
+  <title>Lovecraft RAG Engine — Milestone Roadmap</title>
   <style>
     :root {
       --bg: #0b0f14;
@@ -173,28 +173,28 @@
 </head>
 <body>
   <header>
-    <h1>Lovecraft Grounded AI Lab — Milestone roadmap (beginner-friendly)</h1>
+    <h1>Lovecraft RAG Engine — Milestone roadmap (beginner-friendly)</h1>
     <p>
-      A compressed, motivation-first learning plan: start from zero with FastAPI, get to grounded answers early,
-      then slow down where real systems work happens (retrieval quality, latency, evals, and observability).
+      A compressed, motivation-first learning plan: start from zero with FastAPI, get to a real RAG answer early,
+      then slow down where the harder work really begins: persistence, embeddings, evaluation, and tracing.
     </p>
     <div class="meta">
       <span class="pill">Shape: 6 milestones (~10-12 weeks at 4h/week)</span>
       <span class="pill">Pacing: early wins in hours, later phases intentionally slower</span>
-      <span class="pill">Output: reusable grounded QA template (Lovecraft to any corpus)</span>
+      <span class="pill">Output: reusable Lovecraft-to-any-docset RAG template</span>
     </div>
 
     <div class="card legend">
-      <span><b>What you will build:</b> A FastAPI grounded AI systems lab over public-domain Lovecraft text: lexical/vector/hybrid retrieval, reranking, metadata-aware filtering, citation-first answering, evaluation harnesses, and request-level tracing.</span>
-      <span><b>What this teaches:</b> Retrieval quality, evaluation, latency, observability, and grounded answer behavior. The final result should feel closer to a small AI systems lab than a toy RAG demo.</span>
-      <span><b>How to use this roadmap:</b> Work through milestone checklists in order. Milestones are not equal effort; early milestones are short, later ones require more debugging and validation. The goal is depth, not tool sprawl.</span>
+      <span><b>What you will build:</b> A FastAPI RAG service over public-domain Lovecraft text: story ingestion, chunking, keyword retrieval, answer generation with citations, then Postgres, pgvector, evals, traces, and a small demo UI.</span>
+      <span><b>What this teaches:</b> API basics first, then retrieval, then the more realistic engineering work around persistence, embeddings, evaluation, and debugging.</span>
+      <span><b>How to use this roadmap:</b> Work through milestone checklists in order. Milestones are not equal effort; early milestones are short, later ones require more debugging and validation.</span>
       <div class="btnrow">
         <button id="expandAll">Expand all</button>
         <button id="collapseAll">Collapse all</button>
         <button id="resetAll">Reset checkboxes</button>
       </div>
       <div class="footer">
-        Tip: your first visible wins should happen fast. Later milestones slow down because retrieval tuning, measurement, and observability are systems work.
+        Tip: your first visible wins should happen fast. Later milestones slow down because persistence, embeddings, and evaluation are more complex than basic API work.
       </div>
     </div>
   </header>
@@ -265,7 +265,7 @@
           </div>
           <div>
             <h3>Definition of done</h3>
-            <p class="small">Done when you can ingest a text file and retrieve its chunks.</p>
+            <p class="small">Done when you can ingest a text file and fetch that story back through the API.</p>
             <h3>Loose pacing</h3>
             <p class="small">Often week 1-2 combined with Milestone A.</p>
           </div>
@@ -275,33 +275,35 @@
       <!-- Milestone C -->
       <details class="card">
         <summary>
-          <span><span class="wk">Milestone C</span> <span class="goal">Retrieval MVP (first grounded answer early)</span></span>
+          <span><span class="wk">Milestone C</span> <span class="goal">Retrieval MVP (first LLM answer early)</span></span>
           <span class="donebadge" data-badge="mC">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Ship a real <code>/ask</code> with citations and grounded behavior early.</p>
+            <p class="small">Ship a real <code>/ask</code> with citations earlier than the old plan did.</p>
             <h3>Estimated total</h3>
             <p class="small">6-8 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
               <li>Chunking strategy and stable chunk IDs as citations.</li>
-              <li>Lexical retrieval + grounded prompting with "don't know" behavior.</li>
+              <li>Keyword retrieval plus a first grounded prompt with "don't know" behavior.</li>
             </ul>
             <h3>Checklist</h3>
             <div class="checklist" data-week="mC">
               <label><input type="checkbox" data-id="mc-1">Implement chunking (<code>800-1200</code> chars, optional overlap)</label>
               <label><input type="checkbox" data-id="mc-2">Assign stable chunk IDs (<code>{story_id}:{chunk_index}</code>)</label>
-              <label><input type="checkbox" data-id="mc-3">Implement lexical/BM25-style retrieval and <code>POST /search</code></label>
+              <label><input type="checkbox" data-id="mc-3">Implement keyword retrieval and <code>POST /search</code></label>
               <label><input type="checkbox" data-id="mc-4">Implement first real <code>POST /ask</code> with LLM call</label>
               <label><input type="checkbox" data-id="mc-5">Return <code>{answer, citations:[chunk_id...]}</code></label>
               <label><input type="checkbox" data-id="mc-6">Enforce "don't know" response when context is insufficient</label>
             </div>
           </div>
           <div>
+            <h3>You will need</h3>
+            <p class="small"><code>/search</code> needs no external account. <code>/ask</code> does need an LLM connection such as OpenAI, Anthropic, or a local Ollama model.</p>
             <h3>Definition of done</h3>
-            <p class="small">Done when <code>/ask</code> returns grounded answers with citations and refuses unsupported claims.</p>
+            <p class="small">Done when <code>/ask</code> returns an answer with citations and refuses unsupported claims.</p>
             <h3>Loose pacing</h3>
             <p class="small">Usually reaches first LLM-powered answer by week 2-4.</p>
           </div>
@@ -311,38 +313,36 @@
       <!-- Milestone D -->
       <details class="card">
         <summary>
-          <span><span class="wk">Milestone D</span> <span class="goal">Persistence + hybrid retrieval + reranking</span></span>
+          <span><span class="wk">Milestone D</span> <span class="goal">Persistence + vector search</span></span>
           <span class="donebadge" data-badge="mD">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Move from in-memory MVP to persistent storage, hybrid retrieval, and candidate reranking.</p>
+            <p class="small">Move from in-memory MVP to persistent storage and semantic retrieval.</p>
             <h3>Estimated total</h3>
             <p class="small">10-14 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
               <li>Docker Compose + Postgres only when you need persistence.</li>
-              <li>Why keyword/lexical search helps exact names/titles/phrases while semantic search helps fuzzy thematic matches.</li>
-              <li>Why production retrieval often needs lexical + vector together, not either/or.</li>
-              <li>Why first-pass retrieval is often not enough without a reranking step.</li>
+              <li>How vector retrieval differs from keyword retrieval.</li>
+              <li>How embeddings are ingested as a batch step, not per request.</li>
             </ul>
             <h3>Checklist</h3>
             <div class="checklist" data-week="mD">
               <label><input type="checkbox" data-id="md-1">Add <code>docker-compose.yml</code> with Postgres</label>
-              <label><input type="checkbox" data-id="md-2">Move stories and chunks into DB tables with first-class metadata (<code>title</code>, <code>author</code>, <code>publication_year</code>, <code>source_url</code>, <code>entities</code>, <code>setting</code>, <code>motifs</code>)</label>
+              <label><input type="checkbox" data-id="md-2">Move stories and chunks into DB tables</label>
               <label><input type="checkbox" data-id="md-3">Enable pgvector and add embedding storage</label>
               <label><input type="checkbox" data-id="md-4">Create embeddings ingestion script</label>
-              <label><input type="checkbox" data-id="md-5">Implement vector retrieval (keep lexical/BM25 retrieval available)</label>
-              <label><input type="checkbox" data-id="md-6">Implement hybrid retrieval by combining keyword and vector candidate sets</label>
-              <label><input type="checkbox" data-id="md-7">Add metadata-aware filtering (for example by title, year, entity, motif) to complement embeddings</label>
-              <label><input type="checkbox" data-id="md-8">Retrieve top candidates first, rerank them, then pass only the best chunks to generation</label>
-              <label><input type="checkbox" data-id="md-9">Run and document lexical vs vector vs hybrid, before/after reranking comparison</label>
+              <label><input type="checkbox" data-id="md-5">Switch retrieval to vector mode (keep keyword mode available)</label>
+              <label><input type="checkbox" data-id="md-6">Run and document keyword vs vector comparison</label>
             </div>
           </div>
           <div>
+            <h3>You will need</h3>
+            <p class="small">Docker and Postgres start here, not earlier. You will also need an embeddings source, either a hosted API or a local model.</p>
             <h3>Definition of done</h3>
-            <p class="small">Done when lexical, vector, and hybrid retrieval all work end-to-end, metadata filters are usable, and reranking quality gains are measured.</p>
+            <p class="small">Done when vector retrieval works end-to-end and can be compared against keyword retrieval.</p>
             <h3>Loose pacing</h3>
             <p class="small">This is where pace slows down due to infra and debugging overhead.</p>
           </div>
@@ -352,37 +352,36 @@
       <!-- Milestone E -->
       <details class="card">
         <summary>
-          <span><span class="wk">Milestone E</span> <span class="goal">Evaluation harness + observability</span></span>
+          <span><span class="wk">Milestone E</span> <span class="goal">Evaluation harness + traces</span></span>
           <span class="donebadge" data-badge="mE">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Adopt a systems mindset: measure behavior by question type, compare changes, and debug with evidence.</p>
+            <p class="small">Adopt a harness mindset: measure behavior, compare changes, and debug with evidence.</p>
             <h3>Estimated total</h3>
             <p class="small">8-12 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
-              <li>How to separate evals into factual, comparative, interpretive, and refusal categories.</li>
-              <li>How to measure grounding quality, not just fluent answer quality.</li>
-              <li>How request IDs, traces, and latency/token metrics make failures debuggable.</li>
+              <li>How to create a repeatable question set and baseline report.</li>
+              <li>How to evaluate retrieval separately from full answer behavior.</li>
+              <li>How request IDs and traces make failures debuggable.</li>
             </ul>
             <h3>Checklist</h3>
             <div class="checklist" data-week="mE">
-              <label><input type="checkbox" data-id="me-1">Create <code>data/eval/eval_questions.json</code> with factual, comparative, interpretive, and refusal cases</label>
+              <label><input type="checkbox" data-id="me-1">Create <code>data/eval/eval_questions.json</code></label>
               <label><input type="checkbox" data-id="me-2">Build retrieval eval script (hit@k and related checks)</label>
-              <label><input type="checkbox" data-id="me-3">Build full grounded-answer eval for <code>/ask</code> responses + citations</label>
+              <label><input type="checkbox" data-id="me-3">Build full RAG eval for <code>/ask</code> responses + citations</label>
               <label><input type="checkbox" data-id="me-4">Save a baseline report for future comparisons</label>
-              <label><input type="checkbox" data-id="me-5">Add request IDs and persist ask traces across retrieval and generation steps</label>
-              <label><input type="checkbox" data-id="me-6">Track retrieval time and generation time separately</label>
-              <label><input type="checkbox" data-id="me-7">Log chunk counts retrieved plus prompt/completion token usage per request</label>
-              <label><input type="checkbox" data-id="me-8">Measure refusal/"don't know" rate and unsupported-claim rate over time</label>
-              <label><input type="checkbox" data-id="me-9">Add a simple trace inspection endpoint or debug view</label>
+              <label><input type="checkbox" data-id="me-5">Add request IDs and persist ask traces</label>
+              <label><input type="checkbox" data-id="me-6">Add a simple trace inspection endpoint or debug view</label>
             </div>
           </div>
           <div>
+            <h3>You will need</h3>
+            <p class="small">No extra SaaS is required for the first version. Start with local scripts and simple trace storage.</p>
             <h3>Definition of done</h3>
-            <p class="small">Done when you can run category-based evals, inspect traces, and pinpoint where grounding or latency breaks down.</p>
+            <p class="small">Done when you can run an eval script and inspect traces to debug failures.</p>
             <h3>Loose pacing</h3>
             <p class="small">Later-phase effort: complexity rises because evaluation and observability are systems work.</p>
           </div>
@@ -398,28 +397,26 @@
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Turn the project into a clean, shareable grounded assistant demo and reusable template.</p>
+            <p class="small">Turn the project into a clean, shareable demo and reusable template.</p>
             <h3>Estimated total</h3>
             <p class="small">4-6 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
-              <li>How to present grounded QA behavior, not just "question in, answer out".</li>
-              <li>How to design UX that fails gracefully under weak retrieval or ambiguous questions.</li>
+              <li>How to present the project so other people can run it quickly.</li>
+              <li>How to explain how the same project can work for other document sets.</li>
             </ul>
             <h3>Checklist</h3>
             <div class="checklist" data-week="mF">
               <label><input type="checkbox" data-id="mf-1">Build a simple demo UI (Gradio or Streamlit) connected to <code>/ask</code></label>
               <label><input type="checkbox" data-id="mf-2">Show answer plus citations in the demo UI</label>
-              <label><input type="checkbox" data-id="mf-3">Design fallback behavior when retrieval confidence is weak</label>
+              <label><input type="checkbox" data-id="mf-3">Optional: provider switching (<code>OpenAI ↔ Ollama/Qwen</code>)</label>
               <label><input type="checkbox" data-id="mf-4">Polish README quickstart and architecture notes</label>
-              <label><input type="checkbox" data-id="mf-5">Handle ambiguous questions with clarification or explicit uncertainty</label>
-              <label><input type="checkbox" data-id="mf-6">Improve citation display so users can verify support quickly</label>
-              <label><input type="checkbox" data-id="mf-7">Add a clear section on reusing this with non-Lovecraft document sets</label>
+              <label><input type="checkbox" data-id="mf-5">Add a clear section on reusing this with non-Lovecraft document sets</label>
             </div>
           </div>
           <div>
             <h3>Definition of done</h3>
-            <p class="small">Done when the demo clearly shows grounded behavior, uncertainty handling, and citations users can inspect.</p>
+            <p class="small">Done when a small demo UI makes the project easy to show to others.</p>
             <h3>Loose pacing</h3>
             <p class="small">Usually the final 1-2 weeks. Keep provider switching secondary to demo usability.</p>
           </div>
@@ -429,34 +426,11 @@
       <section class="card">
         <h3>What you can reuse after this project</h3>
         <ul class="small">
-          <li>A grounded QA API and ingestion pattern for any plain-text corpus.</li>
-          <li>Hybrid retrieval + reranking patterns that transfer beyond Lovecraft.</li>
-          <li>Metadata-aware filtering for debugging, exact retrieval, and corpus extension.</li>
-          <li>Eval and observability workflow for continuous grounding and latency improvement.</li>
+          <li>The API contract and ingestion pattern for any plain-text corpus.</li>
+          <li>Chunk/citation discipline that transfers to PDFs, manuals, and internal docs.</li>
+          <li>Eval and trace workflow for continuous RAG quality improvement.</li>
         </ul>
-        <p class="small">This roadmap starts with Lovecraft for focus and public-domain convenience, but the architecture is intentionally reusable for other corpora. The goal is not just to answer questions, but to understand where retrieval fails, how to measure it, and how to make behavior more trustworthy.</p>
-      </section>
-
-      <section class="card">
-        <h3>Reference docs and articles</h3>
-        <ul class="small">
-          <li><a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener noreferrer">FastAPI documentation</a></li>
-          <li><a href="https://www.postgresql.org/docs/" target="_blank" rel="noopener noreferrer">PostgreSQL documentation</a></li>
-          <li><a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener noreferrer">pgvector documentation</a></li>
-          <li><a href="https://en.wikipedia.org/wiki/Okapi_BM25" target="_blank" rel="noopener noreferrer">BM25 overview</a></li>
-          <li><a href="https://www.pinecone.io/learn/series/rag/rerankers/" target="_blank" rel="noopener noreferrer">Rerankers in RAG systems</a></li>
-          <li><a href="https://www.pinecone.io/learn/hybrid-search-intro/" target="_blank" rel="noopener noreferrer">Hybrid search introduction</a></li>
-          <li><a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (Lewis et al.)</a></li>
-          <li><a href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noopener noreferrer">Lost in the Middle: How Language Models Use Long Contexts</a></li>
-          <li><a href="https://arxiv.org/abs/2401.01313" target="_blank" rel="noopener noreferrer">RAGAs: Automated Evaluation of Retrieval Augmented Generation</a></li>
-          <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Building effective grounded agentic systems (Anthropic)</a></li>
-        </ul>
-        <p class="small">Use references to sharpen each milestone, but keep scope tight: this roadmap intentionally stays compact so each step teaches a real concept.</p>
-      </section>
-
-      <section class="card">
-        <h3>End-state outcome</h3>
-        <p class="small">By the end, this should read as: "I built a small grounded AI system over a literary corpus, learned retrieval/evaluation/latency/observability tradeoffs, explored retrieval behavior on ambiguous stylistically dense text, and produced a reusable template for citation-backed question answering with measurable behavior."</p>
+        <p class="small">This roadmap starts with Lovecraft for focus and public-domain convenience, but the architecture is intentionally reusable for other document sets.</p>
       </section>
 
     </div>
