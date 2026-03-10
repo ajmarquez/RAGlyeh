@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lovecraft RAG Engine — Milestone Roadmap</title>
+  <title>Lovecraft RAG Engine — Learning Roadmap</title>
   <style>
     :root {
       --bg: #0b0f14;
@@ -28,12 +28,12 @@
     }
     header {
       padding: 28px 18px 10px;
-      max-width: 980px;
+      max-width: 1180px;
       margin: 0 auto;
     }
     h1 { margin: 0 0 8px; font-size: 22px; }
     p { margin: 8px 0; color: var(--muted); }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 0 18px 32px; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 18px 32px; }
     .grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -74,7 +74,7 @@
       list-style: none;
       font-weight: 650;
       display: flex;
-      align-items: baseline;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
     }
@@ -101,7 +101,7 @@
       gap: 10px;
     }
     @media (min-width: 860px) {
-      .two { grid-template-columns: 1fr 1fr; }
+      .two { grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr); }
     }
     h3 { margin: 6px 0; font-size: 13px; color: var(--muted); letter-spacing: .02em; text-transform: uppercase; }
     ul { margin: 6px 0 0; padding-left: 18px; }
@@ -124,6 +124,7 @@
       gap: 10px;
       margin: 8px 0;
       color: var(--text);
+      line-height: 1.5;
     }
     .checklist input[type="checkbox"] {
       margin-top: 2px;
@@ -158,6 +159,14 @@
       margin-top: 10px;
     }
     .legend span { color: var(--muted); font-size: 12px; }
+    .summarytext {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .summarytext .goal {
+      display: inline-block;
+      max-width: 100%;
+    }
     .kbd {
       font-family: var(--mono);
       padding: 2px 6px;
@@ -173,28 +182,28 @@
 </head>
 <body>
   <header>
-    <h1>Lovecraft RAG Engine — Milestone roadmap (beginner-friendly)</h1>
+    <h1>Lovecraft RAG Engine — Learning roadmap (beginner-friendly)</h1>
     <p>
-      A compressed, motivation-first learning plan: start from zero with FastAPI, get to a real RAG answer early,
-      then slow down where the harder work really begins: persistence, embeddings, evaluation, and tracing.
+      A learning-first roadmap for building a Lovecraft RAG project from zero: Python basics, FastAPI, API design,
+      retrieval, LLM integration, persistence, vector search, evaluation, tracing, and a small demo.
     </p>
     <div class="meta">
-      <span class="pill">Shape: 6 milestones (~10-12 weeks at 4h/week)</span>
-      <span class="pill">Pacing: early wins in hours, later phases intentionally slower</span>
+      <span class="pill">Shape: 12 learning phases</span>
+      <span class="pill">Pacing: smaller conceptual jumps for beginners</span>
       <span class="pill">Output: reusable Lovecraft-to-any-docset RAG template</span>
     </div>
 
     <div class="card legend">
-      <span><b>What you will build:</b> A FastAPI RAG service over public-domain Lovecraft text: story ingestion, chunking, keyword retrieval, answer generation with citations, then Postgres, pgvector, evals, traces, and a small demo UI.</span>
-      <span><b>What this teaches:</b> API basics first, then retrieval, then the more realistic engineering work around persistence, embeddings, evaluation, and debugging.</span>
-      <span><b>How to use this roadmap:</b> Work through milestone checklists in order. Milestones are not equal effort; early milestones are short, later ones require more debugging and validation.</span>
+      <span><b>What you will build:</b> A FastAPI RAG service over public-domain Lovecraft text: ingestion, chunking, keyword retrieval, answer generation with citations, then Postgres, pgvector, evals, traces, and a demo UI.</span>
+      <span><b>What this teaches:</b> Python and FastAPI basics first, then retrieval and secrets handling, then the more realistic engineering work around persistence, embeddings, evaluation, and debugging.</span>
+      <span><b>How to use this roadmap:</b> Work through phases in order. Each phase is smaller than the old milestone view, so the learning curve is smoother and blockers are easier to isolate.</span>
       <div class="btnrow">
         <button id="expandAll">Expand all</button>
         <button id="collapseAll">Collapse all</button>
         <button id="resetAll">Reset checkboxes</button>
       </div>
       <div class="footer">
-        Tip: your first visible wins should happen fast. Later milestones slow down because persistence, embeddings, and evaluation are more complex than basic API work.
+        Tip: early phases are intentionally small. Later phases slow down because persistence, embeddings, evaluation, and tracing are real systems work.
       </div>
     </div>
   </header>
@@ -202,232 +211,427 @@
   <main class="wrap">
     <div class="grid" id="weeks">
 
-      <!-- Milestone A -->
+      <!-- Phase 0 -->
       <details class="card" open>
         <summary>
-          <span><span class="wk">Milestone A</span> <span class="goal">Foundations</span></span>
-          <span class="donebadge" data-badge="mA">0%</span>
+          <span class="summarytext"><span class="wk">Phase 0</span> <span class="goal">Python and environment basics</span></span>
+          <span class="donebadge" data-badge="p0">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Get a clean local FastAPI project running from zero.</p>
+            <p class="small">Set up a clean Python environment before touching FastAPI.</p>
             <h3>Estimated total</h3>
-            <p class="small">4-6 hours (often faster if focused).</p>
+            <p class="small">1-2 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
-              <li>How <code>uvicorn app.main:app --reload</code> maps to your app entrypoint.</li>
-              <li>How to keep dependencies reproducible and project layout clear.</li>
+              <li>What <code>.venv</code> is and why dependency isolation matters.</li>
+              <li>Why <code>requirements.txt</code> makes setup reproducible.</li>
             </ul>
             <h3>Checklist</h3>
-            <div class="checklist" data-week="mA">
-              <label><input type="checkbox" data-id="ma-1">Create repo and <code>.venv</code></label>
-              <label><input type="checkbox" data-id="ma-2">Install FastAPI + Uvicorn</label>
-              <label><input type="checkbox" data-id="ma-3">Implement <code>GET /health</code> returning <code>{"status":"ok"}</code></label>
-              <label><input type="checkbox" data-id="ma-4">Add <code>.gitignore</code> and <code>requirements.txt</code></label>
-              <label><input type="checkbox" data-id="ma-5">Create basic folder structure (<code>app/</code>, <code>scripts/</code>, <code>data/</code>)</label>
+            <div class="checklist" data-week="p0">
+              <label><input type="checkbox" data-id="p0-1">Create repo and <code>.venv</code></label>
+              <label><input type="checkbox" data-id="p0-2">Install minimum dependencies</label>
+              <label><input type="checkbox" data-id="p0-3">Create <code>requirements.txt</code></label>
+              <label><input type="checkbox" data-id="p0-4">Create basic folders (<code>app/</code>, <code>scripts/</code>, <code>data/</code>)</label>
             </div>
           </div>
           <div>
             <h3>Definition of done</h3>
-            <p class="small">Done when <code>/health</code> runs locally and dependencies are reproducible on another machine.</p>
-            <h3>Loose pacing</h3>
-            <p class="small">Usually week 1 or less.</p>
+            <p class="small">Done when a clean shell can recreate your environment from <code>requirements.txt</code>.</p>
+            <h3>You will need</h3>
+            <p class="small">Only Python and a terminal. No FastAPI knowledge required yet.</p>
           </div>
         </div>
       </details>
 
-      <!-- Milestone B -->
+      <!-- Phase 1 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Milestone B</span> <span class="goal">First usable API</span></span>
-          <span class="donebadge" data-badge="mB">0%</span>
+          <span class="summarytext"><span class="wk">Phase 1</span> <span class="goal">FastAPI startup basics</span></span>
+          <span class="donebadge" data-badge="p1">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Make story ingestion/query routes usable without any database yet.</p>
+            <p class="small">Boot a minimal FastAPI app and understand what <code>app.main:app</code> means.</p>
+            <h3>Estimated total</h3>
+            <p class="small">1-2 hours.</p>
+            <h3>What you will learn</h3>
+            <ul class="small">
+              <li>The difference between FastAPI and Uvicorn.</li>
+              <li>What a route is and how to verify one endpoint works.</li>
+            </ul>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="p1">
+              <label><input type="checkbox" data-id="p1-1">Create <code>app/main.py</code> with a FastAPI app</label>
+              <label><input type="checkbox" data-id="p1-2">Implement <code>GET /health</code></label>
+              <label><input type="checkbox" data-id="p1-3">Run <code>uvicorn app.main:app --reload</code></label>
+              <label><input type="checkbox" data-id="p1-4">Verify <code>/health</code> in browser or <code>curl</code></label>
+            </div>
+          </div>
+          <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when <code>/health</code> runs locally and you can explain what <code>app.main:app</code> points to.</p>
+            <h3>You will need</h3>
+            <p class="small">FastAPI and Uvicorn only. No stories or models yet.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Phase 2 -->
+      <details class="card">
+        <summary>
+          <span class="summarytext"><span class="wk">Phase 2</span> <span class="goal">Request and response thinking</span></span>
+          <span class="donebadge" data-badge="p2">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Goal</h3>
+            <p class="small">Learn request bodies, path parameters, status codes, and Pydantic models.</p>
+            <h3>Estimated total</h3>
+            <p class="small">2-3 hours.</p>
+            <h3>What you will learn</h3>
+            <ul class="small">
+              <li>How schemas act as DTOs at the API boundary.</li>
+              <li>When to use <code>201</code>, <code>400</code>, <code>404</code>, and <code>422</code>.</li>
+            </ul>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="p2">
+              <label><input type="checkbox" data-id="p2-1">Create <code>StoryCreate</code> schema</label>
+              <label><input type="checkbox" data-id="p2-2">Create <code>Story</code> response schema</label>
+              <label><input type="checkbox" data-id="p2-3">Implement <code>POST /stories</code> returning <code>201</code></label>
+              <label><input type="checkbox" data-id="p2-4">Implement <code>GET /stories/{id}</code> path parameter lookup</label>
+            </div>
+          </div>
+          <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when one story can be created and fetched back with intentional status codes.</p>
+            <h3>You will need</h3>
+            <p class="small">No DB and no RAG concepts yet. This is still FastAPI contract work.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Phase 3 -->
+      <details class="card">
+        <summary>
+          <span class="summarytext"><span class="wk">Phase 3</span> <span class="goal">Ingestion and local data handling</span></span>
+          <span class="donebadge" data-badge="p3">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Goal</h3>
+            <p class="small">Understand how local text becomes application data before introducing persistence.</p>
+            <h3>Estimated total</h3>
+            <p class="small">2-3 hours.</p>
+            <h3>What you will learn</h3>
+            <ul class="small">
+              <li>Why in-memory storage is acceptable for early learning.</li>
+              <li>How to validate text ingestion cleanly.</li>
+            </ul>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="p3">
+              <label><input type="checkbox" data-id="p3-1">Add in-memory story store</label>
+              <label><input type="checkbox" data-id="p3-2">Support creating stories from local text content</label>
+              <label><input type="checkbox" data-id="p3-3">Implement <code>GET /stories</code></label>
+              <label><input type="checkbox" data-id="p3-4">Add basic business-rule validation for empty text</label>
+            </div>
+          </div>
+          <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when stories can be ingested and listed without any database.</p>
+            <h3>You will need</h3>
+            <p class="small">Only local text samples. Persistence still waits.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Phase 4 -->
+      <details class="card">
+        <summary>
+          <span class="summarytext"><span class="wk">Phase 4</span> <span class="goal">Retrieval without any LLM</span></span>
+          <span class="donebadge" data-badge="p4">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Goal</h3>
+            <p class="small">Build chunking and search before touching model integration.</p>
+            <h3>Estimated total</h3>
+            <p class="small">3-4 hours.</p>
+            <h3>What you will learn</h3>
+            <ul class="small">
+              <li>Why chunking is the foundation of citations.</li>
+              <li>Why <code>POST /search</code> should be debugged before <code>/ask</code>.</li>
+            </ul>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="p4">
+              <label><input type="checkbox" data-id="p4-1">Create chunk shape with stable IDs</label>
+              <label><input type="checkbox" data-id="p4-2">Implement fixed-size chunking</label>
+              <label><input type="checkbox" data-id="p4-3">Add chunk inspection or debug path</label>
+              <label><input type="checkbox" data-id="p4-4">Implement <code>POST /search</code> with keyword retrieval</label>
+            </div>
+          </div>
+          <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when <code>POST /search</code> returns sensible chunks for obvious questions without any LLM.</p>
+            <h3>You will need</h3>
+            <p class="small">No secrets and no model account. This phase is retrieval-only.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Phase 5 -->
+      <details class="card">
+        <summary>
+          <span class="summarytext"><span class="wk">Phase 5</span> <span class="goal">Secrets and hosted model setup</span></span>
+          <span class="donebadge" data-badge="p5">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Goal</h3>
+            <p class="small">Learn how to handle API keys and model configuration safely before building <code>/ask</code>.</p>
+            <h3>Estimated total</h3>
+            <p class="small">1-2 hours.</p>
+            <h3>What you will learn</h3>
+            <ul class="small">
+              <li>Why secrets belong in <code>.env</code>, not in route files.</li>
+              <li>The difference between a generation model and an embedding model.</li>
+            </ul>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="p5">
+              <label><input type="checkbox" data-id="p5-1">Create <code>.env.example</code> documenting model variables</label>
+              <label><input type="checkbox" data-id="p5-2">Add local <code>.env</code> for development</label>
+              <label><input type="checkbox" data-id="p5-3">Load API key and model name from configuration</label>
+              <label><input type="checkbox" data-id="p5-4">Keep secrets out of route files and logs</label>
+            </div>
+          </div>
+          <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when the app can read model configuration safely and fail clearly if a key is missing.</p>
+            <h3>You will need</h3>
+            <p class="small">One provider choice, such as OpenAI, Anthropic, or a local Ollama setup.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Phase 6 -->
+      <details class="card">
+        <summary>
+          <span class="summarytext"><span class="wk">Phase 6</span> <span class="goal">First grounded answer</span></span>
+          <span class="donebadge" data-badge="p6">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Goal</h3>
+            <p class="small">Build the first real <code>POST /ask</code> using retrieved context and citations.</p>
+            <h3>Estimated total</h3>
+            <p class="small">3-4 hours.</p>
+            <h3>What you will learn</h3>
+            <ul class="small">
+              <li>Prompt construction and grounded behavior.</li>
+              <li>Why “I don’t know” is a quality feature, not a failure.</li>
+            </ul>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="p6">
+              <label><input type="checkbox" data-id="p6-1">Create a small model client wrapper</label>
+              <label><input type="checkbox" data-id="p6-2">Implement first <code>POST /ask</code> using top 1 retrieved chunk</label>
+              <label><input type="checkbox" data-id="p6-3">Return <code>{answer, citations}</code></label>
+              <label><input type="checkbox" data-id="p6-4">Add explicit refusal when support is weak</label>
+            </div>
+          </div>
+          <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when answerable questions return citations and unsupported questions refuse cleanly.</p>
+            <h3>You will need</h3>
+            <p class="small">A working model connection from Phase 5 and retrieval from Phase 4.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Phase 7 -->
+      <details class="card">
+        <summary>
+          <span class="summarytext"><span class="wk">Phase 7</span> <span class="goal">Persistence</span></span>
+          <span class="donebadge" data-badge="p7">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Goal</h3>
+            <p class="small">Move from temporary in-memory state to persistent storage with Postgres.</p>
+            <h3>Estimated total</h3>
+            <p class="small">3-5 hours.</p>
+            <h3>What you will learn</h3>
+            <ul class="small">
+              <li>Why persistence should come before vector retrieval.</li>
+              <li>How Docker Compose helps local dependency setup.</li>
+            </ul>
+            <h3>Checklist</h3>
+            <div class="checklist" data-week="p7">
+              <label><input type="checkbox" data-id="p7-1">Add <code>docker-compose.yml</code> with Postgres</label>
+              <label><input type="checkbox" data-id="p7-2">Create DB tables for stories and chunks</label>
+              <label><input type="checkbox" data-id="p7-3">Move story and chunk storage out of memory</label>
+              <label><input type="checkbox" data-id="p7-4">Verify data survives app restarts</label>
+            </div>
+          </div>
+          <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when stories and chunks survive restarts and can be queried from the DB.</p>
+            <h3>You will need</h3>
+            <p class="small">Docker, Postgres, and patience for a slower phase.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Phase 8 -->
+      <details class="card">
+        <summary>
+          <span class="summarytext"><span class="wk">Phase 8</span> <span class="goal">Embeddings and vector search</span></span>
+          <span class="donebadge" data-badge="p8">0%</span>
+        </summary>
+        <div class="content two">
+          <div>
+            <h3>Goal</h3>
+            <p class="small">Add semantic retrieval after persistence is stable.</p>
             <h3>Estimated total</h3>
             <p class="small">4-6 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
-              <li>Pydantic models and simple API contract design.</li>
-              <li>Basic error handling and local text ingestion flow.</li>
+              <li>What embeddings are and why they differ from generation models.</li>
+              <li>Why embeddings should be batch-ingested, not generated per request.</li>
             </ul>
             <h3>Checklist</h3>
-            <div class="checklist" data-week="mB">
-              <label><input type="checkbox" data-id="mb-1">Create <code>StoryCreate</code> and <code>Story</code> models</label>
-              <label><input type="checkbox" data-id="mb-2">Implement <code>POST /stories</code></label>
-              <label><input type="checkbox" data-id="mb-3">Implement <code>GET /stories</code> and <code>GET /stories/{id}</code></label>
-              <label><input type="checkbox" data-id="mb-4">Ingest local text file content into in-memory store</label>
-              <label><input type="checkbox" data-id="mb-5">Add basic 404 and validation errors</label>
+            <div class="checklist" data-week="p8">
+              <label><input type="checkbox" data-id="p8-1">Enable pgvector</label>
+              <label><input type="checkbox" data-id="p8-2">Add embedding storage for chunks</label>
+              <label><input type="checkbox" data-id="p8-3">Create embedding ingestion script</label>
+              <label><input type="checkbox" data-id="p8-4">Implement vector retrieval</label>
+              <label><input type="checkbox" data-id="p8-5">Compare keyword vs vector results</label>
             </div>
           </div>
           <div>
             <h3>Definition of done</h3>
-            <p class="small">Done when you can ingest a text file and fetch that story back through the API.</p>
-            <h3>Loose pacing</h3>
-            <p class="small">Often week 1-2 combined with Milestone A.</p>
-          </div>
-        </div>
-      </details>
-
-      <!-- Milestone C -->
-      <details class="card">
-        <summary>
-          <span><span class="wk">Milestone C</span> <span class="goal">Retrieval MVP (first LLM answer early)</span></span>
-          <span class="donebadge" data-badge="mC">0%</span>
-        </summary>
-        <div class="content two">
-          <div>
-            <h3>Goal</h3>
-            <p class="small">Ship a real <code>/ask</code> with citations earlier than the old plan did.</p>
-            <h3>Estimated total</h3>
-            <p class="small">6-8 hours.</p>
-            <h3>What you will learn</h3>
-            <ul class="small">
-              <li>Chunking strategy and stable chunk IDs as citations.</li>
-              <li>Keyword retrieval plus a first grounded prompt with "don't know" behavior.</li>
-            </ul>
-            <h3>Checklist</h3>
-            <div class="checklist" data-week="mC">
-              <label><input type="checkbox" data-id="mc-1">Implement chunking (<code>800-1200</code> chars, optional overlap)</label>
-              <label><input type="checkbox" data-id="mc-2">Assign stable chunk IDs (<code>{story_id}:{chunk_index}</code>)</label>
-              <label><input type="checkbox" data-id="mc-3">Implement keyword retrieval and <code>POST /search</code></label>
-              <label><input type="checkbox" data-id="mc-4">Implement first real <code>POST /ask</code> with LLM call</label>
-              <label><input type="checkbox" data-id="mc-5">Return <code>{answer, citations:[chunk_id...]}</code></label>
-              <label><input type="checkbox" data-id="mc-6">Enforce "don't know" response when context is insufficient</label>
-            </div>
-          </div>
-          <div>
+            <p class="small">Done when vector retrieval works and you can compare it against keyword retrieval on the same questions.</p>
             <h3>You will need</h3>
-            <p class="small"><code>/search</code> needs no external account. <code>/ask</code> does need an LLM connection such as OpenAI, Anthropic, or a local Ollama model.</p>
-            <h3>Definition of done</h3>
-            <p class="small">Done when <code>/ask</code> returns an answer with citations and refuses unsupported claims.</p>
-            <h3>Loose pacing</h3>
-            <p class="small">Usually reaches first LLM-powered answer by week 2-4.</p>
+            <p class="small">An embeddings source, hosted or local, plus the persistence work from Phase 7.</p>
           </div>
         </div>
       </details>
 
-      <!-- Milestone D -->
+      <!-- Phase 9 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Milestone D</span> <span class="goal">Persistence + vector search</span></span>
-          <span class="donebadge" data-badge="mD">0%</span>
+          <span class="summarytext"><span class="wk">Phase 9</span> <span class="goal">Evaluation</span></span>
+          <span class="donebadge" data-badge="p9">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Move from in-memory MVP to persistent storage and semantic retrieval.</p>
+            <p class="small">Create a repeatable way to measure retrieval and answer quality.</p>
             <h3>Estimated total</h3>
-            <p class="small">10-14 hours.</p>
+            <p class="small">3-4 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
-              <li>Docker Compose + Postgres only when you need persistence.</li>
-              <li>How vector retrieval differs from keyword retrieval.</li>
-              <li>How embeddings are ingested as a batch step, not per request.</li>
+              <li>The difference between retrieval metrics and answer metrics.</li>
+              <li>Why baseline reports matter before tuning.</li>
             </ul>
             <h3>Checklist</h3>
-            <div class="checklist" data-week="mD">
-              <label><input type="checkbox" data-id="md-1">Add <code>docker-compose.yml</code> with Postgres</label>
-              <label><input type="checkbox" data-id="md-2">Move stories and chunks into DB tables</label>
-              <label><input type="checkbox" data-id="md-3">Enable pgvector and add embedding storage</label>
-              <label><input type="checkbox" data-id="md-4">Create embeddings ingestion script</label>
-              <label><input type="checkbox" data-id="md-5">Switch retrieval to vector mode (keep keyword mode available)</label>
-              <label><input type="checkbox" data-id="md-6">Run and document keyword vs vector comparison</label>
+            <div class="checklist" data-week="p9">
+              <label><input type="checkbox" data-id="p9-1">Create <code>data/eval/eval_questions.json</code></label>
+              <label><input type="checkbox" data-id="p9-2">Build retrieval eval script (<code>hit@k</code>)</label>
+              <label><input type="checkbox" data-id="p9-3">Build answer eval for <code>/ask</code> responses</label>
+              <label><input type="checkbox" data-id="p9-4">Save a baseline report</label>
             </div>
           </div>
           <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when you can run one eval command and compare results against a saved baseline.</p>
             <h3>You will need</h3>
-            <p class="small">Docker and Postgres start here, not earlier. You will also need an embeddings source, either a hosted API or a local model.</p>
-            <h3>Definition of done</h3>
-            <p class="small">Done when vector retrieval works end-to-end and can be compared against keyword retrieval.</p>
-            <h3>Loose pacing</h3>
-            <p class="small">This is where pace slows down due to infra and debugging overhead.</p>
+            <p class="small">A stable enough retrieval and answer pipeline to run repeatedly.</p>
           </div>
         </div>
       </details>
 
-      <!-- Milestone E -->
+      <!-- Phase 10 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Milestone E</span> <span class="goal">Evaluation harness + traces</span></span>
-          <span class="donebadge" data-badge="mE">0%</span>
+          <span class="summarytext"><span class="wk">Phase 10</span> <span class="goal">Traces and observability</span></span>
+          <span class="donebadge" data-badge="p10">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Adopt a harness mindset: measure behavior, compare changes, and debug with evidence.</p>
+            <p class="small">Make it possible to debug one failed request with evidence.</p>
             <h3>Estimated total</h3>
-            <p class="small">8-12 hours.</p>
+            <p class="small">3-4 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
-              <li>How to create a repeatable question set and baseline report.</li>
-              <li>How to evaluate retrieval separately from full answer behavior.</li>
-              <li>How request IDs and traces make failures debuggable.</li>
+              <li>What request IDs and traces are for.</li>
+              <li>How to localize failures to retrieval, prompt construction, or generation.</li>
             </ul>
             <h3>Checklist</h3>
-            <div class="checklist" data-week="mE">
-              <label><input type="checkbox" data-id="me-1">Create <code>data/eval/eval_questions.json</code></label>
-              <label><input type="checkbox" data-id="me-2">Build retrieval eval script (hit@k and related checks)</label>
-              <label><input type="checkbox" data-id="me-3">Build full RAG eval for <code>/ask</code> responses + citations</label>
-              <label><input type="checkbox" data-id="me-4">Save a baseline report for future comparisons</label>
-              <label><input type="checkbox" data-id="me-5">Add request IDs and persist ask traces</label>
-              <label><input type="checkbox" data-id="me-6">Add a simple trace inspection endpoint or debug view</label>
+            <div class="checklist" data-week="p10">
+              <label><input type="checkbox" data-id="p10-1">Add request IDs</label>
+              <label><input type="checkbox" data-id="p10-2">Persist ask traces</label>
+              <label><input type="checkbox" data-id="p10-3">Store retrieved chunk IDs and timings</label>
+              <label><input type="checkbox" data-id="p10-4">Add a simple trace inspection endpoint or view</label>
             </div>
           </div>
           <div>
+            <h3>Definition of done</h3>
+            <p class="small">Done when one failed answer can be investigated without guessing.</p>
             <h3>You will need</h3>
-            <p class="small">No extra SaaS is required for the first version. Start with local scripts and simple trace storage.</p>
-            <h3>Definition of done</h3>
-            <p class="small">Done when you can run an eval script and inspect traces to debug failures.</p>
-            <h3>Loose pacing</h3>
-            <p class="small">Later-phase effort: complexity rises because evaluation and observability are systems work.</p>
+            <p class="small">The eval mindset from Phase 9 and a working answer pipeline.</p>
           </div>
         </div>
       </details>
 
-      <!-- Milestone F -->
+      <!-- Phase 11 -->
       <details class="card">
         <summary>
-          <span><span class="wk">Milestone F</span> <span class="goal">Demo + polish</span></span>
-          <span class="donebadge" data-badge="mF">0%</span>
+          <span class="summarytext"><span class="wk">Phase 11</span> <span class="goal">Demo and product behavior</span></span>
+          <span class="donebadge" data-badge="p11">0%</span>
         </summary>
         <div class="content two">
           <div>
             <h3>Goal</h3>
-            <p class="small">Turn the project into a clean, shareable demo and reusable template.</p>
+            <p class="small">Turn the backend into a shareable project that shows answers, citations, and uncertainty clearly.</p>
             <h3>Estimated total</h3>
-            <p class="small">4-6 hours.</p>
+            <p class="small">3-5 hours.</p>
             <h3>What you will learn</h3>
             <ul class="small">
-              <li>How to present the project so other people can run it quickly.</li>
-              <li>How to explain how the same project can work for other document sets.</li>
+              <li>Why AI UX includes citations and uncertainty handling.</li>
+              <li>How to present the project so it can be reused with other document sets.</li>
             </ul>
             <h3>Checklist</h3>
-            <div class="checklist" data-week="mF">
-              <label><input type="checkbox" data-id="mf-1">Build a simple demo UI (Gradio or Streamlit) connected to <code>/ask</code></label>
-              <label><input type="checkbox" data-id="mf-2">Show answer plus citations in the demo UI</label>
-              <label><input type="checkbox" data-id="mf-3">Optional: provider switching (<code>OpenAI ↔ Ollama/Qwen</code>)</label>
-              <label><input type="checkbox" data-id="mf-4">Polish README quickstart and architecture notes</label>
-              <label><input type="checkbox" data-id="mf-5">Add a clear section on reusing this with non-Lovecraft document sets</label>
+            <div class="checklist" data-week="p11">
+              <label><input type="checkbox" data-id="p11-1">Build a simple demo UI (Gradio or Streamlit)</label>
+              <label><input type="checkbox" data-id="p11-2">Show answer plus citations clearly</label>
+              <label><input type="checkbox" data-id="p11-3">Make uncertainty visible in the UI</label>
+              <label><input type="checkbox" data-id="p11-4">Polish README quickstart and architecture notes</label>
+              <label><input type="checkbox" data-id="p11-5">Explain reuse for non-Lovecraft corpora</label>
             </div>
           </div>
           <div>
             <h3>Definition of done</h3>
-            <p class="small">Done when a small demo UI makes the project easy to show to others.</p>
-            <h3>Loose pacing</h3>
-            <p class="small">Usually the final 1-2 weeks. Keep provider switching secondary to demo usability.</p>
+            <p class="small">Done when a new person can run the demo and understand both support and uncertainty.</p>
+            <h3>You will need</h3>
+            <p class="small">One UI tool choice and a stable enough backend to demo confidently.</p>
           </div>
         </div>
       </details>
+
+      <section class="card">
+        <h3>Why this version is longer</h3>
+        <p class="small">The older 6-milestone version was good for project tracking, but the jumps were too steep for learning. This page is intentionally more granular so you can understand one concept at a time: FastAPI startup, schemas, ingestion, retrieval, secrets, model integration, persistence, vector search, evaluation, traces, and demo UX.</p>
+      </section>
 
       <section class="card">
         <h3>What you can reuse after this project</h3>
         <ul class="small">
           <li>The API contract and ingestion pattern for any plain-text corpus.</li>
           <li>Chunk/citation discipline that transfers to PDFs, manuals, and internal docs.</li>
+          <li>Secrets/config discipline for any app that calls external APIs.</li>
           <li>Eval and trace workflow for continuous RAG quality improvement.</li>
         </ul>
         <p class="small">This roadmap starts with Lovecraft for focus and public-domain convenience, but the architecture is intentionally reusable for other document sets.</p>
@@ -439,7 +643,7 @@
 
   <script>
     // Persist checkbox state in localStorage
-    const KEY = "lovecraft_rag_milestone_plan_v1";
+    const KEY = "lovecraft_rag_learning_plan_v1";
 
     function loadState() {
       try { return JSON.parse(localStorage.getItem(KEY) || "{}"); }
