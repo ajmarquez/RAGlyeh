@@ -1,0 +1,96 @@
+info:
+  name: Create Story
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{baseUrl}}/stories"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "At the mountains of madness",
+        "author": "H. P. Lovecraft",
+        "source_url": "",
+        "text": "This is a text"
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: baseUrl
+      value: http://127.0.0.1:8000
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: 201 Response
+    description: Successful Response
+    request:
+      url: "{{baseUrl}}/stories"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "title": "",
+            "author": "",
+            "source_url": "",
+            "text": ""
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "id": "",
+            "title": "",
+            "author": "",
+            "source_url": "",
+            "text": "",
+            "created_at": ""
+          }
+  - name: 422 Response
+    description: Validation Error
+    request:
+      url: "{{baseUrl}}/stories"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "title": "",
+            "author": "",
+            "source_url": "",
+            "text": ""
+          }
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "detail": [
+              {
+                "loc": [],
+                "msg": "",
+                "type": "",
+                "input": "",
+                "ctx": {}
+              }
+            ]
+          }
