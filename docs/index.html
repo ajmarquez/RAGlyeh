@@ -6,32 +6,44 @@
   <title>Lovecraft RAG Engine — Learning Roadmap</title>
   <style>
     :root {
-      --bg: #0b0f14;
-      --card: #121926;
-      --muted: #92a4b8;
-      --text: #e6edf3;
-      --accent: #58a6ff;
-      --ok: #3fb950;
-      --warn: #d29922;
-      --border: rgba(255,255,255,.08);
+      --bg: #091012;
+      --card: #111a1b;
+      --card-2: #162122;
+      --muted: #a9b8b1;
+      --text: #edf1ea;
+      --accent: #9fbf7a;
+      --accent-2: #c0a46a;
+      --ok: #6ea86d;
+      --warn: #c6934f;
+      --border: rgba(197, 212, 186, .12);
+      --shadow: rgba(0, 0, 0, .38);
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      --sans: "Avenir Next", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
     }
     body {
       margin: 0;
       font-family: var(--sans);
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(88,166,255,.18), transparent 60%),
-                  radial-gradient(900px 500px at 110% 10%, rgba(63,185,80,.12), transparent 55%),
+      background: radial-gradient(1200px 680px at 15% -10%, rgba(159,191,122,.16), transparent 60%),
+                  radial-gradient(900px 540px at 110% 10%, rgba(192,164,106,.10), transparent 55%),
+                  radial-gradient(900px 700px at 50% 120%, rgba(54,86,74,.18), transparent 60%),
+                  linear-gradient(180deg, rgba(255,255,255,.015), transparent 30%),
                   var(--bg);
       color: var(--text);
-      line-height: 1.45;
+      line-height: 1.55;
     }
     header {
       padding: 28px 18px 10px;
       max-width: 1180px;
       margin: 0 auto;
     }
-    h1 { margin: 0 0 8px; font-size: 22px; }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-family: var(--serif);
+      letter-spacing: .02em;
+      font-weight: 700;
+    }
     p { margin: 8px 0; color: var(--muted); }
     .wrap { max-width: 1180px; margin: 0 auto; padding: 0 18px 32px; }
     .grid {
@@ -40,11 +52,13 @@
       gap: 12px;
     }
     .card {
-      background: linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 34%),
+                  linear-gradient(135deg, rgba(159,191,122,.04), transparent 50%),
+                  var(--card);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 14px 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      box-shadow: 0 14px 34px var(--shadow);
     }
     .meta {
       display: flex;
@@ -61,14 +75,15 @@
       border: 1px solid var(--border);
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(0,0,0,.16);
+      background: rgba(12,19,20,.55);
     }
     details {
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.018), transparent 30%), rgba(7,12,13,.32);
       padding: 10px 12px;
     }
+    details[open] { border-color: rgba(159,191,122,.22); }
     summary {
       cursor: pointer;
       list-style: none;
@@ -79,8 +94,8 @@
       gap: 12px;
     }
     summary::-webkit-details-marker { display: none; }
-    .wk { color: var(--accent); font-family: var(--mono); font-size: 12px; }
-    .goal { color: var(--text); font-size: 14px; }
+    .wk { color: var(--accent-2); font-family: var(--mono); font-size: 12px; }
+    .goal { color: var(--text); font-size: 15px; font-family: var(--serif); }
     .donebadge {
       font-family: var(--mono);
       font-size: 12px;
@@ -89,6 +104,7 @@
       padding: 4px 8px;
       border-radius: 999px;
       white-space: nowrap;
+      background: rgba(12,19,20,.42);
     }
     .content {
       margin-top: 10px;
@@ -103,9 +119,16 @@
     @media (min-width: 860px) {
       .two { grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr); }
     }
-    h3 { margin: 6px 0; font-size: 13px; color: var(--muted); letter-spacing: .02em; text-transform: uppercase; }
+    h3 {
+      margin: 6px 0;
+      font-size: 12px;
+      color: var(--accent-2);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
     ul { margin: 6px 0 0; padding-left: 18px; }
     li { margin: 6px 0; }
+    li::marker { color: var(--accent); }
     code, pre {
       font-family: var(--mono);
       font-size: 12px;
@@ -115,7 +138,7 @@
       padding: 10px;
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
+      background: rgba(7,12,13,.5);
       overflow-x: auto;
     }
     .checklist label {
@@ -145,14 +168,14 @@
     }
     button {
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.18);
+      background: linear-gradient(180deg, rgba(159,191,122,.08), rgba(12,19,20,.45));
       color: var(--text);
       padding: 8px 10px;
       border-radius: 10px;
       cursor: pointer;
       font-family: var(--sans);
     }
-    button:hover { border-color: rgba(88,166,255,.4); }
+    button:hover { border-color: rgba(159,191,122,.4); }
     .legend {
       display: grid;
       gap: 6px;
@@ -172,7 +195,7 @@
       padding: 2px 6px;
       border-radius: 7px;
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
+      background: rgba(7,12,13,.46);
       color: var(--text);
       font-size: 12px;
     }
