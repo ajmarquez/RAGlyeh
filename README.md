@@ -9,5 +9,4 @@ A reusable RAG + eval harness template, demonstrated on public-domain Lovecraft 
 ## Start here
 
 - Learning roadmap: [docs/index.html](docs/index.html)
-- Local repo guide snapshot: [docs/WIKI.md](docs/WIKI.md)
 - Source-of-truth wiki: [RAGlyeh GitHub Wiki](https://github.com/ajmarquez/RAGlyeh/wiki)
