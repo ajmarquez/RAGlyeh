@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">RAGlyeh logo</title>
+  <desc id="desc">A Lovecraftian emblem with an eye, tentacles, and an open book.</desc>
+  <defs>
+    <linearGradient id="parchment" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f2ead8"/>
+      <stop offset="100%" stop-color="#d7c4a2"/>
+    </linearGradient>
+    <linearGradient id="deep" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#162422"/>
+      <stop offset="100%" stop-color="#0b1414"/>
+    </linearGradient>
+    <linearGradient id="iris" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#a8cb79"/>
+      <stop offset="100%" stop-color="#6f8e52"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity=".24"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <circle cx="320" cy="320" r="260" fill="url(#parchment)" stroke="#6e5a39" stroke-width="14"/>
+    <circle cx="320" cy="320" r="228" fill="none" stroke="#87724a" stroke-width="5" stroke-dasharray="4 10"/>
+  </g>
+
+  <g fill="none" stroke="#29403b" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M168 372c-22 28-42 62-38 96 3 26 24 48 48 54"/>
+    <path d="M220 392c-18 30-22 72-6 100 10 17 28 30 48 34"/>
+    <path d="M472 372c22 28 42 62 38 96-3 26-24 48-48 54"/>
+    <path d="M420 392c18 30 22 72 6 100-10 17-28 30-48 34"/>
+    <path d="M288 412c-10 24-14 56-4 80 6 14 18 24 36 28"/>
+    <path d="M352 412c10 24 14 56 4 80-6 14-18 24-36 28"/>
+  </g>
+
+  <g>
+    <path d="M188 252c46-56 98-86 132-86s86 30 132 86c-46 56-98 86-132 86s-86-30-132-86Z" fill="url(#deep)" stroke="#355149" stroke-width="10"/>
+    <ellipse cx="320" cy="252" rx="52" ry="52" fill="url(#iris)" stroke="#3d5b40" stroke-width="8"/>
+    <ellipse cx="320" cy="252" rx="18" ry="46" fill="#101917"/>
+    <circle cx="304" cy="234" r="10" fill="#f0f4ea" opacity=".78"/>
+  </g>
+
+  <g fill="url(#parchment)" stroke="#6e5a39" stroke-width="8" stroke-linejoin="round">
+    <path d="M196 446c42-18 88-28 124-28v96c-36-18-82-26-124-24Z"/>
+    <path d="M444 446c-42-18-88-28-124-28v96c36-18 82-26 124-24Z"/>
+  </g>
+
+  <g stroke="#6e5a39" stroke-width="4" opacity=".62">
+    <path d="M230 462c26-10 54-16 82-18"/>
+    <path d="M230 482c26-10 54-15 82-16"/>
+    <path d="M230 502c26-9 54-13 82-14"/>
+    <path d="M410 462c-26-10-54-16-82-18"/>
+    <path d="M410 482c-26-10-54-15-82-16"/>
+    <path d="M410 502c-26-9-54-13-82-14"/>
+  </g>
+
+  <g fill="none" stroke="#9a8354" stroke-width="7" stroke-linecap="round">
+    <path d="M320 102v30"/>
+    <path d="M242 122l12 24"/>
+    <path d="M398 122l-12 24"/>
+  </g>
+</svg>

@@ -37,6 +37,27 @@
       max-width: 1180px;
       margin: 0 auto;
     }
+    .hero {
+      display: grid;
+      gap: 18px;
+      align-items: center;
+    }
+    @media (min-width: 920px) {
+      .hero {
+        grid-template-columns: 180px minmax(0, 1fr);
+      }
+    }
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-wrap img {
+      width: 160px;
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,.28));
+    }
     h1 {
       margin: 0 0 8px;
       font-size: 28px;
@@ -205,15 +226,22 @@
 </head>
 <body>
   <header>
-    <h1>Lovecraft RAG Engine — Learning roadmap (beginner-friendly)</h1>
-    <p>
-      A learning-first roadmap for building a Lovecraft RAG project from zero: Python basics, FastAPI, API design,
-      retrieval, LLM integration, persistence, vector search, evaluation, tracing, and a small demo.
-    </p>
-    <div class="meta">
-      <span class="pill">Shape: 12 learning phases</span>
-      <span class="pill">Pacing: smaller conceptual jumps for beginners</span>
-      <span class="pill">Output: reusable Lovecraft-to-any-docset RAG template</span>
+    <div class="hero">
+      <div class="logo-wrap">
+        <img src="assets/raglyeh-mark.svg" alt="RAGlyeh logo" />
+      </div>
+      <div>
+        <h1>Lovecraft RAG Engine — Learning roadmap (beginner-friendly)</h1>
+        <p>
+          A learning-first roadmap for building a Lovecraft RAG project from zero: Python basics, FastAPI, API design,
+          retrieval, LLM integration, persistence, vector search, evaluation, tracing, and a small demo.
+        </p>
+        <div class="meta">
+          <span class="pill">Shape: 12 learning phases</span>
+          <span class="pill">Pacing: smaller conceptual jumps for beginners</span>
+          <span class="pill">Output: reusable Lovecraft-to-any-docset RAG template</span>
+        </div>
+      </div>
     </div>
 
     <div class="card legend">
